@@ -2,12 +2,32 @@ import * as React from 'react';
 import { KeyboardDatePicker, KeyboardDatePickerProps, TimePickerProps, KeyboardTimePicker } from '@material-ui/pickers';
 import { FormikValues } from 'formik';
 import { get } from 'lodash';
-import { IFieldProps } from '..';
+import { TFieldConditions } from './ConditionalOperation';
 
+
+export interface ReadOnlyProps { 
+    renderer: (props: IFieldProps) => React.ReactNode
+}
+export interface FormConfig { 
+    type: string
+    name?: string
+    id?: string,
+    valueKey: string
+    flex?: number | string
+    fieldProps?: object
+    styles?: object
+    classNames?: Array<string>,
+    condition?: TFieldConditions
+    readOnlyProps?: ReadOnlyProps
+}
+export interface IFieldProps {
+    formikProps?: FormikValues,
+    fieldConfig?: FormConfig
+    isReadOnly?: boolean
+}
 export interface IMUIDatePickerProps extends KeyboardDatePickerProps {
     outputFormat?: string
 }
-
 export const MUIDatePicker: React.FC<IFieldProps & { fieldProps?: IMUIDatePickerProps }> = (props) => {
     const { fieldProps = {} as IMUIDatePickerProps, formikProps = {} as FormikValues } = props;
     const value = get(formikProps, `values.${fieldProps.name}`);

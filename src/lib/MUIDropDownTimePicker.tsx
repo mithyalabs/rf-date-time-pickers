@@ -3,8 +3,8 @@ import { FormikValues } from 'formik';
 import { get, isString, map } from 'lodash';
 import React, { FC } from 'react';
 import moment from 'moment'
-import { IFieldProps, FormConfig } from '..';
-import { MenuOptionObject, getFieldError } from '../Utils';
+import { IFieldProps, FormConfig } from './MUIDateTimePicker';
+import { MenuOptionObject, getFieldError } from './Utils';
 export interface IMUIDropDownTimePickerProps extends SelectProps {
     label?: string
     emptyItem?: string | boolean
