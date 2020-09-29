@@ -6,6 +6,7 @@ import { KeyboardDatePickerProps } from '@material-ui/pickers/DatePicker';
 import { FormikValues } from 'formik';
 import { get } from 'lodash';
 import { TFieldConditions } from './ConditionalOperation';
+import moment from 'moment';
 // import {IFieldProps} from 'react-forms'
 // import { IMUIDatePickerProps } from 'react-forms/dist/lib/ml-form-builder/lib/MUIDateTimePicker';
 
@@ -44,8 +45,7 @@ export const MUIDatePicker: React.FC<IFieldProps & { fieldProps?: IMUIDatePicker
             formikProps.setFieldValue(fieldProps.name, date, false);
         }
         else{
-       // const dateValue = (outputFormat === 'date') ? date : date.format(outputFormat || fieldProps.format || 'MM/DD/YYYY');
-        formikProps.setFieldValue(fieldProps.name, (outputFormat === 'date') ? date : date.format(outputFormat || fieldProps.format || 'MM/DD/YYYY'), false);
+            formikProps.setFieldValue(fieldProps.name, (outputFormat === 'date') ? date :moment(date).format(outputFormat || fieldProps.format || 'MM/DD/YYYY'), false);
         }    
     };
     const updatedProps = {
@@ -55,7 +55,7 @@ export const MUIDatePicker: React.FC<IFieldProps & { fieldProps?: IMUIDatePicker
         onChange: handleDateChange,
         value: (!value) ? null : undefined,
         inputValue: (!value) ? '' : value,
-        format: fieldProps.format || 'MM/DD/YYYY',
+        format: fieldProps.format || 'mm/dd/yyyy',
 
         onError: (error: React.ReactNode) => {
             // handle as a side effect
