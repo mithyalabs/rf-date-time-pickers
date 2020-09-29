@@ -40,7 +40,7 @@ export const MUIDatePicker: React.FC<IFieldProps & { fieldProps?: IMUIDatePicker
     const fieldError = get(formikProps, `errors.${fieldProps.name}`);
     const { outputFormat, ...datePickerProps } = fieldProps;
     const handleDateChange = (date: any | null) => {
-        if (!date) {
+        if (date  === null) {
             formikProps.setFieldValue(fieldProps.name, date, false);
             return;
         }
