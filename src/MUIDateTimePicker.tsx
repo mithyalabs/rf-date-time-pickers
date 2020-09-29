@@ -44,8 +44,8 @@ export const MUIDatePicker: React.FC<IFieldProps & { fieldProps?: IMUIDatePicker
             formikProps.setFieldValue(fieldProps.name, date, false);
         }
         else{
-        const dateValue = (outputFormat === 'date') ? date : date.format(outputFormat || fieldProps.format || 'MM/DD/YYYY');
-        formikProps.setFieldValue(fieldProps.name, dateValue, false);
+       // const dateValue = (outputFormat === 'date') ? date : date.format(outputFormat || fieldProps.format || 'MM/DD/YYYY');
+        formikProps.setFieldValue(fieldProps.name, (outputFormat === 'date') ? date : date.format(outputFormat || fieldProps.format || 'MM/DD/YYYY'), false);
         }    
     };
     const updatedProps = {
@@ -77,10 +77,10 @@ export const MUITimePicker: React.FC<IFieldProps & { fieldProps?: TimePickerProp
     const fieldError = get(formikProps, `errors.${fieldProps.name}`);
     const value = get(formikProps, `values.${fieldProps.name}`);
     const handleTimeChange = (time: any | null) => {
-        // if (time === null)
-        //     formikProps.setFieldValue(fieldProps.name, time, false);
-        // else
-        //     formikProps.setFieldValue(fieldProps.name, new Date(time).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }), false)
+        if (time === null)
+            formikProps.setFieldValue(fieldProps.name, time, false);
+        else
+            formikProps.setFieldValue(fieldProps.name, new Date(time).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }), false)
     }
     const updatedProps = {
         ...fieldProps,
