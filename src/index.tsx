@@ -7,7 +7,6 @@ export { MUIDropDownTimePicker } from './MUIDropDownTimePicker'
 import '@date-io/date-fns'
 import { isArray, map } from 'lodash';
 
-
 let ComponentMapConfig: { [key: string]: { component: JSX.Element, props?: object } } = {}; 
 
 const attachField = (type: Array<string> | string, component: JSX.Element, props?: object) => { 
@@ -15,9 +14,9 @@ const attachField = (type: Array<string> | string, component: JSX.Element, props
         map(type, item => ComponentMapConfig[item] = { component, props })
     } else
         ComponentMapConfig[type] = { component, props };
-
 }
-attachField('xyz', <MUIDatePicker />, { variant: 'inline', label: 'Select Date' });
-attachField('abc', <MUITimePicker />, { variant: 'inline', label: 'Select Time' });
-attachField('qwe', <MUIDropDownTimePicker />)
+
+attachField('date-picker', <MUIDatePicker />, { variant: 'inline', label: 'Select Date' });
+attachField('time-picker', <MUITimePicker />, { variant: 'inline', label: 'Select Time' });
+attachField('time-picker-select', <MUIDropDownTimePicker />)
 
