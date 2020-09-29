@@ -1,13 +1,12 @@
-import { isArray, map } from 'lodash';
 import React from 'react';
 import { MUIDatePicker, MUITimePicker } from './MUIDateTimePicker'
+export { MUIDatePicker, MUITimePicker } from './MUIDateTimePicker'
 import { MUIDropDownTimePicker } from './MUIDropDownTimePicker'
+export { MUIDropDownTimePicker } from './MUIDropDownTimePicker'
+// import {attachField} from 'react-forms'
+import '@date-io/date-fns'
+import { isArray, map } from 'lodash';
 
-export const MUIDateTime = () => {
-    attachField('date-picker', <MUIDatePicker/>, { variant: 'inline', label: 'Select Date' });
-    attachField('time-picker', <MUITimePicker />, { variant: 'inline', label: 'Select Time' });
-    attachField('time-picker-select', <MUIDropDownTimePicker />)
-}
 
 let ComponentMapConfig: { [key: string]: { component: JSX.Element, props?: object } } = {}; 
 
@@ -18,3 +17,7 @@ const attachField = (type: Array<string> | string, component: JSX.Element, props
         ComponentMapConfig[type] = { component, props };
 
 }
+attachField('xyz', <MUIDatePicker />, { variant: 'inline', label: 'Select Date' });
+attachField('abc', <MUITimePicker />, { variant: 'inline', label: 'Select Time' });
+attachField('qwe', <MUIDropDownTimePicker />)
+

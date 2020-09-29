@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { KeyboardDatePicker, KeyboardDatePickerProps, TimePickerProps, KeyboardTimePicker } from '@material-ui/pickers';
+import { KeyboardDatePicker, TimePickerProps, KeyboardTimePicker, KeyboardDatePickerProps } from '@material-ui/pickers';
 import { FormikValues } from 'formik';
 import { get } from 'lodash';
 import { TFieldConditions } from './ConditionalOperation';
-
+// import {IFieldProps} from 'react-forms'
+// import { IMUIDatePickerProps } from 'react-forms/dist/lib/ml-form-builder/lib/MUIDateTimePicker';
 
 export interface ReadOnlyProps { 
     renderer: (props: IFieldProps) => React.ReactNode
@@ -28,14 +29,14 @@ export interface IFieldProps {
 export interface IMUIDatePickerProps extends KeyboardDatePickerProps {
     outputFormat?: string
 }
+
+
 export const MUIDatePicker: React.FC<IFieldProps & { fieldProps?: IMUIDatePickerProps }> = (props) => {
     const { fieldProps = {} as IMUIDatePickerProps, formikProps = {} as FormikValues } = props;
     const value = get(formikProps, `values.${fieldProps.name}`);
-    //const [selectedDate, setSelectedDate] = React.useState<MaterialUiPickersDate | null>(initValue ? initValue : null);
     const fieldError = get(formikProps, `errors.${fieldProps.name}`);
     const { outputFormat, ...datePickerProps } = fieldProps;
     const handleDateChange = (date: any | null) => {
-        //setSelectedDate(date);
         if (!date) {
             formikProps.setFieldValue(fieldProps.name, date, false);
             return;
