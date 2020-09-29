@@ -42,10 +42,11 @@ export const MUIDatePicker: React.FC<IFieldProps & { fieldProps?: IMUIDatePicker
     const handleDateChange = (date: any | null) => {
         if (date  === null) {
             formikProps.setFieldValue(fieldProps.name, date, false);
-            return;
         }
+        else{
         const dateValue = (outputFormat === 'date') ? date : date.format(outputFormat || fieldProps.format || 'MM/DD/YYYY');
         formikProps.setFieldValue(fieldProps.name, dateValue, false);
+        }    
     };
     const updatedProps = {
         ...datePickerProps,
