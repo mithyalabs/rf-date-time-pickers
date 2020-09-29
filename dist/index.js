@@ -14,7 +14,7 @@ var attachField = function (type, component, props) {
     else
         ComponentMapConfig[type] = { component: component, props: props };
 };
-attachField('xyz', React.createElement(MUIDatePicker, null), { variant: 'inline', label: 'Select Date' });
-attachField('abc', React.createElement(MUITimePicker, null), { variant: 'inline', label: 'Select Time' });
-attachField('qwe', React.createElement(MUIDropDownTimePicker, null));
+attachField('date-picker-new', React.createElement(MUIDatePicker, null), { variant: 'inline', label: 'Select Date' });
+attachField('time-picker-new', React.createElement(MUITimePicker, null), { variant: 'inline', label: 'Select Time' });
+attachField('time-picker-select-new', React.createElement(MUIDropDownTimePicker, null));
 //# sourceMappingURL=index.js.map

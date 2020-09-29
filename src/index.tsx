@@ -16,7 +16,7 @@ const attachField = (type: Array<string> | string, component: JSX.Element, props
         ComponentMapConfig[type] = { component, props };
 }
 
-attachField('date-picker', <MUIDatePicker />, { variant: 'inline', label: 'Select Date' });
-attachField('time-picker', <MUITimePicker />, { variant: 'inline', label: 'Select Time' });
-attachField('time-picker-select', <MUIDropDownTimePicker />)
+attachField('date-picker-new', <MUIDatePicker />, { variant: 'inline', label: 'Select Date' });
+attachField('time-picker-new', <MUITimePicker />, { variant: 'inline', label: 'Select Time' });
+attachField('time-picker-select-new', <MUIDropDownTimePicker />)
 
