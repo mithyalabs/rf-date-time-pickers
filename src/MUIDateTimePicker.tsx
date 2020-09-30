@@ -6,7 +6,7 @@ import { KeyboardDatePickerProps } from '@material-ui/pickers/DatePicker';
 import { FormikValues } from 'formik';
 import { get } from 'lodash';
 import { TFieldConditions } from './ConditionalOperation';
-import moment from 'moment';
+// import moment from 'moment';
 // import {IFieldProps} from 'react-forms'
 // import { IMUIDatePickerProps } from 'react-forms/dist/lib/ml-form-builder/lib/MUIDateTimePicker';
 
@@ -45,7 +45,8 @@ export const MUIDatePicker: React.FC<IFieldProps & { fieldProps?: IMUIDatePicker
             formikProps.setFieldValue(fieldProps.name, date, false);
         }
         else{
-            formikProps.setFieldValue(fieldProps.name, (outputFormat === 'date') ? date :moment(date).format(outputFormat || fieldProps.format || 'MM/DD/YYYY'), false);
+            // (outputFormat === 'date') ? date :moment(date).format(outputFormat || fieldProps.format || 'MM/DD/YYYY')
+            formikProps.setFieldValue(fieldProps.name, date , false);
         }    
     };
     const updatedProps = {
@@ -80,7 +81,7 @@ export const MUITimePicker: React.FC<IFieldProps & { fieldProps?: TimePickerProp
         if (time === null)
             formikProps.setFieldValue(fieldProps.name, time, false);
         else
-            formikProps.setFieldValue(fieldProps.name, new Date(time).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }), false)
+            formikProps.setFieldValue(fieldProps.name, new Date(time).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric',hour12: false }), false)
     }
     const updatedProps = {
         ...fieldProps,

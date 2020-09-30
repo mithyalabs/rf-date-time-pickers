@@ -24,7 +24,6 @@ import * as React from 'react';
 import { KeyboardDatePicker } from '@material-ui/pickers/DatePicker';
 import { KeyboardTimePicker } from '@material-ui/pickers/TimePicker';
 import { get } from 'lodash';
-import moment from 'moment';
 export var MUIDatePicker = function (props) {
     var _a = props.fieldProps, fieldProps = _a === void 0 ? {} : _a, _b = props.formikProps, formikProps = _b === void 0 ? {} : _b;
     var value = get(formikProps, "values." + fieldProps.name);
@@ -35,7 +34,8 @@ export var MUIDatePicker = function (props) {
             formikProps.setFieldValue(fieldProps.name, date, false);
         }
         else {
-            formikProps.setFieldValue(fieldProps.name, (outputFormat === 'date') ? date : moment(date).format(outputFormat || fieldProps.format || 'MM/DD/YYYY'), false);
+            // (outputFormat === 'date') ? date :moment(date).format(outputFormat || fieldProps.format || 'MM/DD/YYYY')
+            formikProps.setFieldValue(fieldProps.name, date, false);
         }
     };
     var updatedProps = __assign(__assign({}, datePickerProps), { error: !!fieldError, helperText: (fieldError || ''), onChange: handleDateChange, value: (!value) ? null : undefined, inputValue: (!value) ? '' : value, format: fieldProps.format || 'mm/dd/yyyy', onError: function (error) {
@@ -54,7 +54,7 @@ export var MUITimePicker = function (props) {
         if (time === null)
             formikProps.setFieldValue(fieldProps.name, time, false);
         else
-            formikProps.setFieldValue(fieldProps.name, new Date(time).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }), false);
+            formikProps.setFieldValue(fieldProps.name, new Date(time).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: false }), false);
     };
     var updatedProps = __assign(__assign({}, fieldProps), { error: !!fieldError, helperText: (fieldError || ''), onChange: handleTimeChange, value: (!value) ? null : undefined, inputValue: (!value) ? '' : value, onError: function (error) {
             if (error !== fieldError) {
