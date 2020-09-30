@@ -3,6 +3,8 @@ import { MUIDatePicker, MUITimePicker } from './MUIDateTimePicker'
 export { MUIDatePicker, MUITimePicker } from './MUIDateTimePicker'
 import { MUIDropDownTimePicker } from './MUIDropDownTimePicker'
 export { MUIDropDownTimePicker } from './MUIDropDownTimePicker'
+import { MUIFileInput } from './MUIFileInput';
+export { MUIFileInput } from './MUIFileInput';
 // import {attachField} from 'react-forms'
 import '@date-io/date-fns'
 import { isArray, map } from 'lodash';
@@ -15,7 +17,7 @@ const attachField = (type: Array<string> | string, component: JSX.Element, props
     } else
         ComponentMapConfig[type] = { component, props };
 }
-
+attachField('file-input-new', <MUIFileInput />);
 attachField('date-picker-new', <MUIDatePicker />, { variant: 'inline', label: 'Select Date' });
 attachField('time-picker-new', <MUITimePicker />, { variant: 'inline', label: 'Select Time' });
 attachField('time-picker-select-new', <MUIDropDownTimePicker />)

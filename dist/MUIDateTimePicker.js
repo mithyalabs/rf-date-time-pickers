@@ -24,20 +24,21 @@ import * as React from 'react';
 import { KeyboardDatePicker } from '@material-ui/pickers/DatePicker';
 import { KeyboardTimePicker } from '@material-ui/pickers/TimePicker';
 import { get } from 'lodash';
+import moment from 'moment';
 export var MUIDatePicker = function (props) {
     var _a = props.fieldProps, fieldProps = _a === void 0 ? {} : _a, _b = props.formikProps, formikProps = _b === void 0 ? {} : _b;
     var value = get(formikProps, "values." + fieldProps.name);
     var fieldError = get(formikProps, "errors." + fieldProps.name);
     var outputFormat = fieldProps.outputFormat, datePickerProps = __rest(fieldProps, ["outputFormat"]);
     var handleDateChange = function (date) {
-        if (!date) {
+        if (date === null) {
             formikProps.setFieldValue(fieldProps.name, date, false);
-            return;
         }
-        var dateValue = (outputFormat === 'date') ? date : date.format(outputFormat || fieldProps.format || 'MM/DD/YYYY');
-        formikProps.setFieldValue(fieldProps.name, dateValue, false);
+        else {
+            formikProps.setFieldValue(fieldProps.name, (outputFormat === 'date') ? date : moment(date).format(outputFormat || fieldProps.format || 'MM/DD/YYYY'), false);
+        }
     };
-    var updatedProps = __assign(__assign({}, datePickerProps), { error: !!fieldError, helperText: (fieldError || ''), onChange: handleDateChange, value: (!value) ? null : undefined, inputValue: (!value) ? '' : value, format: fieldProps.format || 'MM/DD/YYYY', onError: function (error) {
+    var updatedProps = __assign(__assign({}, datePickerProps), { error: !!fieldError, helperText: (fieldError || ''), onChange: handleDateChange, value: (!value) ? null : undefined, inputValue: (!value) ? '' : value, format: fieldProps.format || 'mm/dd/yyyy', onError: function (error) {
             // handle as a side effect
             if (error !== fieldError) {
                 formikProps.setFieldError(fieldProps.name, error);
