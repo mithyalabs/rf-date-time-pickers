@@ -2,37 +2,37 @@ import * as React from 'react';
 import { KeyboardDatePicker} from '@material-ui/pickers/DatePicker';
 import { TimePickerProps} from '@material-ui/pickers/TimePicker';
 import { KeyboardTimePicker} from '@material-ui/pickers/TimePicker';
-import { KeyboardDatePickerProps } from '@material-ui/pickers/DatePicker';
+// import { KeyboardDatePickerProps } from '@material-ui/pickers/DatePicker';
 import { FormikValues } from 'formik';
 import { get } from 'lodash';
-import { TFieldConditions } from './ConditionalOperation';
+// import { TFieldConditions } from './ConditionalOperation';
 // import moment from 'moment';
-// import {IFieldProps} from 'react-forms'
-// import { IMUIDatePickerProps } from 'react-forms/dist/lib/ml-form-builder/lib/MUIDateTimePicker';
+import {IFieldProps} from 'react-forms'
+import { IMUIDatePickerProps } from 'react-forms/dist/lib/ml-form-builder/lib/MUIDateTimePicker';
 
-export interface ReadOnlyProps { 
-    renderer: (props: IFieldProps) => React.ReactNode
-}
-export interface FormConfig { 
-    type: string
-    name?: string
-    id?: string,
-    valueKey: string
-    flex?: number | string
-    fieldProps?: object
-    styles?: object
-    classNames?: Array<string>,
-    condition?: TFieldConditions
-    readOnlyProps?: ReadOnlyProps
-}
-export interface IFieldProps {
-    formikProps?: FormikValues,
-    fieldConfig?: FormConfig
-    isReadOnly?: boolean
-}
-export interface IMUIDatePickerProps extends KeyboardDatePickerProps {
-    outputFormat?: string
-}
+// export interface ReadOnlyProps { 
+//     renderer: (props: IFieldProps) => React.ReactNode
+// }
+// export interface FormConfig { 
+//     type: string
+//     name?: string
+//     id?: string,
+//     valueKey: string
+//     flex?: number | string
+//     fieldProps?: object
+//     styles?: object
+//     classNames?: Array<string>,
+//     condition?: TFieldConditions
+//     readOnlyProps?: ReadOnlyProps
+// }
+// export interface IFieldProps {
+//     formikProps?: FormikValues,
+//     fieldConfig?: FormConfig
+//     isReadOnly?: boolean
+// }
+// export interface IMUIDatePickerProps extends KeyboardDatePickerProps {
+//     outputFormat?: string
+// }
 
 
 export const MUIDatePicker: React.FC<IFieldProps & { fieldProps?: IMUIDatePickerProps }> = (props) => {
@@ -45,8 +45,9 @@ export const MUIDatePicker: React.FC<IFieldProps & { fieldProps?: IMUIDatePicker
             formikProps.setFieldValue(fieldProps.name, date, false);
         }
         else{
+            let data = new Date(date)
             // (outputFormat === 'date') ? date :moment(date).format(outputFormat || fieldProps.format || 'MM/DD/YYYY')
-            formikProps.setFieldValue(fieldProps.name, date , false);
+            formikProps.setFieldValue(fieldProps.name, data , false);
         }    
     };
     const updatedProps = {

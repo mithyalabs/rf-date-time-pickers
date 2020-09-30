@@ -686,8 +686,9 @@ var MUIDatePicker$1 = function (props) {
             formikProps.setFieldValue(fieldProps.name, date, false);
         }
         else {
+            var data = new Date(date);
             // (outputFormat === 'date') ? date :moment(date).format(outputFormat || fieldProps.format || 'MM/DD/YYYY')
-            formikProps.setFieldValue(fieldProps.name, date, false);
+            formikProps.setFieldValue(fieldProps.name, data, false);
         }
     };
     var updatedProps = __assign$1(__assign$1({}, datePickerProps), { error: !!fieldError, helperText: (fieldError || ''), onChange: handleDateChange, value: (!value) ? null : undefined, inputValue: (!value) ? '' : value, format: fieldProps.format || 'mm/dd/yyyy', onError: function (error) {
