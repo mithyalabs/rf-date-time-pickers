@@ -25,6 +25,7 @@ var CloseIcon = _interopDefault(require('@material-ui/icons/Close'));
 var moment = _interopDefault(require('moment'));
 var DatePicker = require('@material-ui/pickers/DatePicker');
 var TimePicker = require('@material-ui/pickers/TimePicker');
+var Utils = require('react-forms/dist/lib/ml-form-builder/Utils');
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation. All rights reserved.
@@ -676,6 +677,29 @@ function __rest$1(s, e) {
     return t;
 }
 
+// export interface ReadOnlyProps { 
+//     renderer: (props: IFieldProps) => React.ReactNode
+// }
+// export interface FormConfig { 
+//     type: string
+//     name?: string
+//     id?: string,
+//     valueKey: string
+//     flex?: number | string
+//     fieldProps?: object
+//     styles?: object
+//     classNames?: Array<string>,
+//     condition?: TFieldConditions
+//     readOnlyProps?: ReadOnlyProps
+// }
+// export interface IFieldProps {
+//     formikProps?: FormikValues,
+//     fieldConfig?: FormConfig
+//     isReadOnly?: boolean
+// }
+// export interface IMUIDatePickerProps extends KeyboardDatePickerProps {
+//     outputFormat?: string
+// }
 var MUIDatePicker$1 = function (props) {
     var _a = props.fieldProps, fieldProps = _a === void 0 ? {} : _a, _b = props.formikProps, formikProps = _b === void 0 ? {} : _b;
     var value = _.get(formikProps, "values." + fieldProps.name);
@@ -717,14 +741,25 @@ var MUITimePicker$1 = function (props) {
     return (React__default.createElement(TimePicker.KeyboardTimePicker, __assign$1({}, updatedProps)));
 };
 
-var getFieldError$1 = function (fieldName, formikProps) {
-    var fieldError = _.get(formikProps, "errors." + fieldName);
-    var isTouched = _.get(formikProps, "touched." + fieldName);
-    if (!isTouched && formikProps.submitCount < 1)
-        return '';
-    return fieldError;
-};
-
+// import { IFieldProps, FormConfig } from './MUIDateTimePicker';
+// import { MenuOptionObject, getFieldError } from './Utils';
+// export interface IMUIDropDownTimePickerProps extends SelectProps {
+//     label?: string
+//     emptyItem?: string | boolean
+//     helperText?: string
+//     formControlProps?: FormControlProps
+//     formHelperTextProps?: FormHelperTextProps
+//     startTime?: string | Date
+//     endTime?: string | Date
+//     interval?: number
+//     amPm?: boolean
+//     emptyMenuItemProps?: object
+//     menuItemProps?: object
+//     inputLabelProps?: object
+// }
+// export interface MUIDropDownTimePickerProps extends IFieldProps {
+//     fieldProps?: IMUIDropDownTimePickerProps
+// }
 var getOptions$1 = function (startTime, endTime, interval, amPm) {
     var start = amPm ? moment(startTime, 'hh:mm a').toDate() : moment(startTime, 'HH:mm').toDate();
     var end = amPm ? moment(endTime, 'hh:mm a').toDate() : moment(endTime, 'HH:mm').toDate();
@@ -738,7 +773,7 @@ var getOptions$1 = function (startTime, endTime, interval, amPm) {
 };
 var MUIDropDownTimePicker$1 = function (props) {
     var _a = props.fieldProps, fieldProps = _a === void 0 ? {} : _a, _b = props.fieldConfig, fieldConfig = _b === void 0 ? {} : _b, _c = props.formikProps, formikProps = _c === void 0 ? {} : _c;
-    var fieldError = getFieldError$1((fieldProps.name || ''), formikProps);
+    var fieldError = Utils.getFieldError((fieldProps.name || ''), formikProps);
     var _d = fieldProps.formControlProps, formControlProps = _d === void 0 ? {} : _d, _e = fieldProps.startTime, startTime = _e === void 0 ? '00:00' : _e, _f = fieldProps.endTime, endTime = _f === void 0 ? '23:45' : _f, _g = fieldProps.interval, interval = _g === void 0 ? 15 : _g, _h = fieldProps.amPm, amPm = _h === void 0 ? false : _h, label = fieldProps.label, emptyItem = fieldProps.emptyItem, helperText = fieldProps.helperText, _j = fieldProps.inputLabelProps, inputLabelProps = _j === void 0 ? {} : _j, formHelperTextProps = fieldProps.formHelperTextProps, _k = fieldProps.menuItemProps, menuItemProps = _k === void 0 ? {} : _k, _l = fieldProps.emptyMenuItemProps, emptyMenuItemProps = _l === void 0 ? {} : _l, _m = fieldProps.error, error = _m === void 0 ? !!fieldError : _m, selectProps = __rest$1(fieldProps, ["formControlProps", "startTime", "endTime", "interval", "amPm", "label", "emptyItem", "helperText", "inputLabelProps", "formHelperTextProps", "menuItemProps", "emptyMenuItemProps", "error"]);
     var labelId = fieldConfig.id + "_label";
     var value = _.get(formikProps, "values." + fieldProps.name) || '';

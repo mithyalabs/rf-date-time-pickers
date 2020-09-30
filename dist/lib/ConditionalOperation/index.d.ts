@@ -1,5 +1,5 @@
 import { FormikValues } from "formik";
-import { FormConfig } from "../MUIDateTimePicker";
+import { FormConfig } from "react-forms";
 export declare type TFieldConditions = {
     hidden?: boolean;
     logicOpn?: string;

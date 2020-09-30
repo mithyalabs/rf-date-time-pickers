@@ -16,6 +16,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import moment from 'moment';
 import { KeyboardDatePicker as KeyboardDatePicker$1 } from '@material-ui/pickers/DatePicker';
 import { KeyboardTimePicker as KeyboardTimePicker$1 } from '@material-ui/pickers/TimePicker';
+import { getFieldError as getFieldError$1 } from 'react-forms/dist/lib/ml-form-builder/Utils';
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation. All rights reserved.
@@ -667,6 +668,29 @@ function __rest$1(s, e) {
     return t;
 }
 
+// export interface ReadOnlyProps { 
+//     renderer: (props: IFieldProps) => React.ReactNode
+// }
+// export interface FormConfig { 
+//     type: string
+//     name?: string
+//     id?: string,
+//     valueKey: string
+//     flex?: number | string
+//     fieldProps?: object
+//     styles?: object
+//     classNames?: Array<string>,
+//     condition?: TFieldConditions
+//     readOnlyProps?: ReadOnlyProps
+// }
+// export interface IFieldProps {
+//     formikProps?: FormikValues,
+//     fieldConfig?: FormConfig
+//     isReadOnly?: boolean
+// }
+// export interface IMUIDatePickerProps extends KeyboardDatePickerProps {
+//     outputFormat?: string
+// }
 var MUIDatePicker$1 = function (props) {
     var _a = props.fieldProps, fieldProps = _a === void 0 ? {} : _a, _b = props.formikProps, formikProps = _b === void 0 ? {} : _b;
     var value = get(formikProps, "values." + fieldProps.name);
@@ -708,14 +732,25 @@ var MUITimePicker$1 = function (props) {
     return (createElement(KeyboardTimePicker$1, __assign$1({}, updatedProps)));
 };
 
-var getFieldError$1 = function (fieldName, formikProps) {
-    var fieldError = get(formikProps, "errors." + fieldName);
-    var isTouched = get(formikProps, "touched." + fieldName);
-    if (!isTouched && formikProps.submitCount < 1)
-        return '';
-    return fieldError;
-};
-
+// import { IFieldProps, FormConfig } from './MUIDateTimePicker';
+// import { MenuOptionObject, getFieldError } from './Utils';
+// export interface IMUIDropDownTimePickerProps extends SelectProps {
+//     label?: string
+//     emptyItem?: string | boolean
+//     helperText?: string
+//     formControlProps?: FormControlProps
+//     formHelperTextProps?: FormHelperTextProps
+//     startTime?: string | Date
+//     endTime?: string | Date
+//     interval?: number
+//     amPm?: boolean
+//     emptyMenuItemProps?: object
+//     menuItemProps?: object
+//     inputLabelProps?: object
+// }
+// export interface MUIDropDownTimePickerProps extends IFieldProps {
+//     fieldProps?: IMUIDropDownTimePickerProps
+// }
 var getOptions$1 = function (startTime, endTime, interval, amPm) {
     var start = amPm ? moment(startTime, 'hh:mm a').toDate() : moment(startTime, 'HH:mm').toDate();
     var end = amPm ? moment(endTime, 'hh:mm a').toDate() : moment(endTime, 'HH:mm').toDate();
