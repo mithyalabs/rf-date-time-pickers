@@ -25,7 +25,7 @@
       "noUnusedParameters": true
   },
   "include": [
-      "src", "src/Utils.tsx", "lib"
+      "src", "src/lib/Utils.tsx", "lib", "rollup.config.js"
   ],
   "exclude": [
       "node_modules",

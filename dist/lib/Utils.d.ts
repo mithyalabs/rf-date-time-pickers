@@ -5,13 +5,13 @@ export declare type MenuOptionObject = {
     value: string;
 };
 export declare type MenuOptions = Array<string> | Array<MenuOptionObject>;
-export declare const getMenuOptions: (options: MenuOptions) => (number | MenuOptionObject | {
+export declare const getMenuOptions: (options: MenuOptions) => (number | MenuOptionObject | ((...items: string[]) => number) | ((...items: MenuOptionObject[]) => number) | {
     (...items: ConcatArray<string>[]): string[];
     (...items: (string | ConcatArray<string>)[]): string[];
 } | {
     (...items: ConcatArray<MenuOptionObject>[]): MenuOptionObject[];
     (...items: (MenuOptionObject | ConcatArray<MenuOptionObject>)[]): MenuOptionObject[];
-} | ((searchElement: string, fromIndex?: number | undefined) => number) | ((searchElement: MenuOptionObject, fromIndex?: number | undefined) => number) | ((searchElement: string, fromIndex?: number | undefined) => boolean) | ((searchElement: MenuOptionObject, fromIndex?: number | undefined) => boolean) | ((...items: string[]) => number) | ((...items: MenuOptionObject[]) => number) | ((value: string, start?: number | undefined, end?: number | undefined) => string[]) | ((value: MenuOptionObject, start?: number | undefined, end?: number | undefined) => MenuOptionObject[]) | ((separator?: string | undefined) => string) | ((compareFn?: ((a: string, b: string) => number) | undefined) => string[]) | ((compareFn?: ((a: MenuOptionObject, b: MenuOptionObject) => number) | undefined) => MenuOptionObject[]) | ((callbackfn: (value: string, index: number, array: string[]) => void, thisArg?: any) => void) | ((callbackfn: (value: MenuOptionObject, index: number, array: MenuOptionObject[]) => void, thisArg?: any) => void) | {
+} | ((separator?: string | undefined) => string) | ((compareFn?: ((a: string, b: string) => number) | undefined) => string[]) | ((compareFn?: ((a: MenuOptionObject, b: MenuOptionObject) => number) | undefined) => MenuOptionObject[]) | ((searchElement: string, fromIndex?: number | undefined) => number) | ((searchElement: MenuOptionObject, fromIndex?: number | undefined) => number) | ((callbackfn: (value: string, index: number, array: string[]) => void, thisArg?: any) => void) | ((callbackfn: (value: MenuOptionObject, index: number, array: MenuOptionObject[]) => void, thisArg?: any) => void) | {
     (callbackfn: (previousValue: string, currentValue: string, currentIndex: number, array: string[]) => string): string;
     (callbackfn: (previousValue: string, currentValue: string, currentIndex: number, array: string[]) => string, initialValue: string): string;
     <U>(callbackfn: (previousValue: U, currentValue: string, currentIndex: number, array: string[]) => U, initialValue: U): U;
@@ -19,5 +19,5 @@ export declare const getMenuOptions: (options: MenuOptions) => (number | MenuOpt
     (callbackfn: (previousValue: MenuOptionObject, currentValue: MenuOptionObject, currentIndex: number, array: MenuOptionObject[]) => MenuOptionObject): MenuOptionObject;
     (callbackfn: (previousValue: MenuOptionObject, currentValue: MenuOptionObject, currentIndex: number, array: MenuOptionObject[]) => MenuOptionObject, initialValue: MenuOptionObject): MenuOptionObject;
     <U_1>(callbackfn: (previousValue: U_1, currentValue: MenuOptionObject, currentIndex: number, array: MenuOptionObject[]) => U_1, initialValue: U_1): U_1;
-} | ((target: number, start: number, end?: number | undefined) => string[]) | ((target: number, start: number, end?: number | undefined) => MenuOptionObject[]))[];
+} | ((value: string, start?: number | undefined, end?: number | undefined) => string[]) | ((value: MenuOptionObject, start?: number | undefined, end?: number | undefined) => MenuOptionObject[]) | ((target: number, start: number, end?: number | undefined) => string[]) | ((target: number, start: number, end?: number | undefined) => MenuOptionObject[]) | ((searchElement: string, fromIndex?: number | undefined) => boolean) | ((searchElement: MenuOptionObject, fromIndex?: number | undefined) => boolean))[];
 export declare const getFieldError: (fieldName: string, formikProps: FormikValues) => any;
