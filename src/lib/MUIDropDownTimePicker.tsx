@@ -7,25 +7,6 @@ import { FormConfig } from 'react-forms';
 import { IMUIDropDownTimePickerProps, MUIDropDownTimePickerProps } from 'react-forms/dist/lib/ml-form-builder/lib/MUIDropDownTimePicker';
 import { getFieldError, MenuOptionObject } from 'react-forms/dist/lib/ml-form-builder/Utils';
 
-// import { IFieldProps, FormConfig } from './MUIDateTimePicker';
-// import { MenuOptionObject, getFieldError } from './Utils';
-// export interface IMUIDropDownTimePickerProps extends SelectProps {
-//     label?: string
-//     emptyItem?: string | boolean
-//     helperText?: string
-//     formControlProps?: FormControlProps
-//     formHelperTextProps?: FormHelperTextProps
-//     startTime?: string | Date
-//     endTime?: string | Date
-//     interval?: number
-//     amPm?: boolean
-//     emptyMenuItemProps?: object
-//     menuItemProps?: object
-//     inputLabelProps?: object
-// }
-// export interface MUIDropDownTimePickerProps extends IFieldProps {
-//     fieldProps?: IMUIDropDownTimePickerProps
-// }
 
 const getOptions = (startTime: string | Date, endTime: string | Date, interval: number, amPm: boolean) => {
     let start = amPm ? moment(startTime, 'hh:mm a').toDate() : moment(startTime, 'HH:mm').toDate()

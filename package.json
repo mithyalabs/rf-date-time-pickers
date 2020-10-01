@@ -21,7 +21,8 @@
     "formik": "^2.1.1",
     "lodash": "^4.17.15",
     "@material-ui/lab": "^4.0.0-alpha.40",
-    "moment": "^2.24.0"
+    "moment": "^2.24.0",
+    "react-forms": "https://github.com/mithyalabs/ml-react-forms.git"
   },
   "devDependencies": {
     "@date-io/core": "^2.10.6",
