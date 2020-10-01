@@ -5,7 +5,7 @@ export declare type MenuOptionObject = {
     value: string;
 };
 export declare type MenuOptions = Array<string> | Array<MenuOptionObject>;
-export declare const getMenuOptions: (options: MenuOptions) => (number | MenuOptionObject | ((value: string, start?: number | undefined, end?: number | undefined) => string[]) | ((value: MenuOptionObject, start?: number | undefined, end?: number | undefined) => MenuOptionObject[]) | ((...items: string[]) => number) | ((...items: MenuOptionObject[]) => number) | {
+export declare const getMenuOptions: (options: MenuOptions) => (number | MenuOptionObject | ((...items: string[]) => number) | ((...items: MenuOptionObject[]) => number) | {
     (...items: ConcatArray<string>[]): string[];
     (...items: (string | ConcatArray<string>)[]): string[];
 } | {
@@ -19,5 +19,5 @@ export declare const getMenuOptions: (options: MenuOptions) => (number | MenuOpt
     (callbackfn: (previousValue: MenuOptionObject, currentValue: MenuOptionObject, currentIndex: number, array: MenuOptionObject[]) => MenuOptionObject): MenuOptionObject;
     (callbackfn: (previousValue: MenuOptionObject, currentValue: MenuOptionObject, currentIndex: number, array: MenuOptionObject[]) => MenuOptionObject, initialValue: MenuOptionObject): MenuOptionObject;
     <U_1>(callbackfn: (previousValue: U_1, currentValue: MenuOptionObject, currentIndex: number, array: MenuOptionObject[]) => U_1, initialValue: U_1): U_1;
-} | ((target: number, start: number, end?: number | undefined) => string[]) | ((target: number, start: number, end?: number | undefined) => MenuOptionObject[]) | ((searchElement: string, fromIndex?: number | undefined) => boolean) | ((searchElement: MenuOptionObject, fromIndex?: number | undefined) => boolean))[];
+} | ((value: string, start?: number | undefined, end?: number | undefined) => string[]) | ((value: MenuOptionObject, start?: number | undefined, end?: number | undefined) => MenuOptionObject[]) | ((target: number, start: number, end?: number | undefined) => string[]) | ((target: number, start: number, end?: number | undefined) => MenuOptionObject[]) | ((searchElement: string, fromIndex?: number | undefined) => boolean) | ((searchElement: MenuOptionObject, fromIndex?: number | undefined) => boolean))[];
 export declare const getFieldError: (fieldName: string, formikProps: FormikValues) => any;
