@@ -32,12 +32,12 @@ export const MUIDatePicker: React.FC<IFieldProps & { fieldProps?: IMUIDatePicker
         inputValue: (!value) ? '' : value,
         format: fieldProps.format || 'mm/dd/yyyy',
 
-        onError: (error: React.ReactNode) => {
-            // handle as a side effect
-            if (error !== fieldError) {
-                formikProps.setFieldError(fieldProps.name, error);
-            }
-        }
+        // onError: (error: React.ReactNode) => {
+        //     // handle as a side effect
+        //     if (error !== fieldError) {
+        //         formikProps.setFieldError(fieldProps.name, error);
+        //     }
+        // }
     };
 
     return (
@@ -64,11 +64,11 @@ export const MUITimePicker: React.FC<IFieldProps & { fieldProps?: TimePickerProp
         onChange: handleTimeChange,
         value: (!value) ? null : undefined,
         inputValue: (!value) ? '' : value,
-        onError: (error: React.ReactNode) => {
-            if (error !== fieldError) {
-                formikProps.setFieldError(fieldProps.name, error);
-            }
-        },
+        // onError: (error: React.ReactNode) => {
+        //     if (error !== fieldError) {
+        //         formikProps.setFieldError(fieldProps.name, error);
+        //     }
+        // },
     };
     return (
         <KeyboardTimePicker  {...updatedProps} />

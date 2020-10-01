@@ -12,7 +12,6 @@ var TimePicker = require('@material-ui/pickers/TimePicker');
 var lodash = require('lodash');
 var core = require('@material-ui/core');
 var moment = _interopDefault(require('moment'));
-var Utils = require('react-forms/dist/lib/ml-form-builder/Utils');
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation.
@@ -67,12 +66,7 @@ var MUIDatePicker = function (props) {
             formikProps.setFieldValue(fieldProps.name, data, false);
         }
     };
-    var updatedProps = __assign(__assign({}, datePickerProps), { error: !!fieldError, helperText: (fieldError || ''), onChange: handleDateChange, value: (!value) ? null : undefined, inputValue: (!value) ? '' : value, format: fieldProps.format || 'mm/dd/yyyy', onError: function (error) {
-            // handle as a side effect
-            if (error !== fieldError) {
-                formikProps.setFieldError(fieldProps.name, error);
-            }
-        } });
+    var updatedProps = __assign(__assign({}, datePickerProps), { error: !!fieldError, helperText: (fieldError || ''), onChange: handleDateChange, value: (!value) ? null : undefined, inputValue: (!value) ? '' : value, format: fieldProps.format || 'mm/dd/yyyy' });
     return (React.createElement(DatePicker.KeyboardDatePicker, __assign({}, updatedProps)));
 };
 var MUITimePicker = function (props) {
@@ -85,12 +79,16 @@ var MUITimePicker = function (props) {
         else
             formikProps.setFieldValue(fieldProps.name, new Date(time).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: false }), false);
     };
-    var updatedProps = __assign(__assign({}, fieldProps), { error: !!fieldError, helperText: (fieldError || ''), onChange: handleTimeChange, value: (!value) ? null : undefined, inputValue: (!value) ? '' : value, onError: function (error) {
-            if (error !== fieldError) {
-                formikProps.setFieldError(fieldProps.name, error);
-            }
-        } });
+    var updatedProps = __assign(__assign({}, fieldProps), { error: !!fieldError, helperText: (fieldError || ''), onChange: handleTimeChange, value: (!value) ? null : undefined, inputValue: (!value) ? '' : value });
     return (React.createElement(TimePicker.KeyboardTimePicker, __assign({}, updatedProps)));
+};
+
+var getFieldError = function (fieldName, formikProps) {
+    var fieldError = lodash.get(formikProps, "errors." + fieldName);
+    var isTouched = lodash.get(formikProps, "touched." + fieldName);
+    if (!isTouched && formikProps.submitCount < 1)
+        return '';
+    return fieldError;
 };
 
 var getOptions = function (startTime, endTime, interval, amPm) {
@@ -106,7 +104,7 @@ var getOptions = function (startTime, endTime, interval, amPm) {
 };
 var MUIDropDownTimePicker = function (props) {
     var _a = props.fieldProps, fieldProps = _a === void 0 ? {} : _a, _b = props.fieldConfig, fieldConfig = _b === void 0 ? {} : _b, _c = props.formikProps, formikProps = _c === void 0 ? {} : _c;
-    var fieldError = Utils.getFieldError((fieldProps.name || ''), formikProps);
+    var fieldError = getFieldError((fieldProps.name || ''), formikProps);
     var _d = fieldProps.formControlProps, formControlProps = _d === void 0 ? {} : _d, _e = fieldProps.startTime, startTime = _e === void 0 ? '00:00' : _e, _f = fieldProps.endTime, endTime = _f === void 0 ? '23:45' : _f, _g = fieldProps.interval, interval = _g === void 0 ? 15 : _g, _h = fieldProps.amPm, amPm = _h === void 0 ? false : _h, label = fieldProps.label, emptyItem = fieldProps.emptyItem, helperText = fieldProps.helperText, _j = fieldProps.inputLabelProps, inputLabelProps = _j === void 0 ? {} : _j, formHelperTextProps = fieldProps.formHelperTextProps, _k = fieldProps.menuItemProps, menuItemProps = _k === void 0 ? {} : _k, _l = fieldProps.emptyMenuItemProps, emptyMenuItemProps = _l === void 0 ? {} : _l, _m = fieldProps.error, error = _m === void 0 ? !!fieldError : _m, selectProps = __rest(fieldProps, ["formControlProps", "startTime", "endTime", "interval", "amPm", "label", "emptyItem", "helperText", "inputLabelProps", "formHelperTextProps", "menuItemProps", "emptyMenuItemProps", "error"]);
     var labelId = fieldConfig.id + "_label";
     var value = lodash.get(formikProps, "values." + fieldProps.name) || '';

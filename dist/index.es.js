@@ -5,7 +5,6 @@ import { KeyboardTimePicker } from '@material-ui/pickers/TimePicker';
 import { get, isString, map } from 'lodash';
 import { FormControl, InputLabel, Select, MenuItem, FormHelperText } from '@material-ui/core';
 import moment from 'moment';
-import { getFieldError } from 'react-forms/dist/lib/ml-form-builder/Utils';
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation.
@@ -60,12 +59,7 @@ var MUIDatePicker = function (props) {
             formikProps.setFieldValue(fieldProps.name, data, false);
         }
     };
-    var updatedProps = __assign(__assign({}, datePickerProps), { error: !!fieldError, helperText: (fieldError || ''), onChange: handleDateChange, value: (!value) ? null : undefined, inputValue: (!value) ? '' : value, format: fieldProps.format || 'mm/dd/yyyy', onError: function (error) {
-            // handle as a side effect
-            if (error !== fieldError) {
-                formikProps.setFieldError(fieldProps.name, error);
-            }
-        } });
+    var updatedProps = __assign(__assign({}, datePickerProps), { error: !!fieldError, helperText: (fieldError || ''), onChange: handleDateChange, value: (!value) ? null : undefined, inputValue: (!value) ? '' : value, format: fieldProps.format || 'mm/dd/yyyy' });
     return (createElement(KeyboardDatePicker, __assign({}, updatedProps)));
 };
 var MUITimePicker = function (props) {
@@ -78,12 +72,16 @@ var MUITimePicker = function (props) {
         else
             formikProps.setFieldValue(fieldProps.name, new Date(time).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: false }), false);
     };
-    var updatedProps = __assign(__assign({}, fieldProps), { error: !!fieldError, helperText: (fieldError || ''), onChange: handleTimeChange, value: (!value) ? null : undefined, inputValue: (!value) ? '' : value, onError: function (error) {
-            if (error !== fieldError) {
-                formikProps.setFieldError(fieldProps.name, error);
-            }
-        } });
+    var updatedProps = __assign(__assign({}, fieldProps), { error: !!fieldError, helperText: (fieldError || ''), onChange: handleTimeChange, value: (!value) ? null : undefined, inputValue: (!value) ? '' : value });
     return (createElement(KeyboardTimePicker, __assign({}, updatedProps)));
+};
+
+var getFieldError = function (fieldName, formikProps) {
+    var fieldError = get(formikProps, "errors." + fieldName);
+    var isTouched = get(formikProps, "touched." + fieldName);
+    if (!isTouched && formikProps.submitCount < 1)
+        return '';
+    return fieldError;
 };
 
 var getOptions = function (startTime, endTime, interval, amPm) {
