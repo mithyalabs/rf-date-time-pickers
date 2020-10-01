@@ -5,6 +5,7 @@ import { KeyboardTimePicker } from '@material-ui/pickers/TimePicker';
 import { get, isString, map } from 'lodash';
 import { FormControl, InputLabel, Select, MenuItem, FormHelperText } from '@material-ui/core';
 import moment from 'moment';
+import { getFieldError } from 'react-forms/dist/lib/ml-form-builder/Utils';
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation.
@@ -83,14 +84,6 @@ var MUITimePicker = function (props) {
             }
         } });
     return (createElement(KeyboardTimePicker, __assign({}, updatedProps)));
-};
-
-var getFieldError = function (fieldName, formikProps) {
-    var fieldError = get(formikProps, "errors." + fieldName);
-    var isTouched = get(formikProps, "touched." + fieldName);
-    if (!isTouched && formikProps.submitCount < 1)
-        return '';
-    return fieldError;
 };
 
 var getOptions = function (startTime, endTime, interval, amPm) {
