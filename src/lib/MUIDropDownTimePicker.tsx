@@ -8,7 +8,7 @@ import { FormConfig, IFieldProps } from 'react-forms';
 // import { getFieldError, MenuOptionObject } from 'react-forms/dist/lib/ml-form-builder/Utils';
 import { getFieldError, MenuOptionObject } from './Utils';
 
-export interface IMUIDropDownTimePickerProps extends SelectProps {
+export interface DropDownTimePickerFieldProps extends SelectProps {
     label?: string
     emptyItem?: string | boolean
     helperText?: string
@@ -22,8 +22,8 @@ export interface IMUIDropDownTimePickerProps extends SelectProps {
     menuItemProps?: object
     inputLabelProps?: object
 }
-export interface MUIDropDownTimePickerProps extends IFieldProps {
-    fieldProps?: IMUIDropDownTimePickerProps
+export interface DropDownTimePickerProps extends IFieldProps {
+    fieldProps?: DropDownTimePickerFieldProps
 }
 
 const getOptions = (startTime: string | Date, endTime: string | Date, interval: number, amPm: boolean) => {
@@ -37,8 +37,8 @@ const getOptions = (startTime: string | Date, endTime: string | Date, interval: 
     }
     return list;
 }
-export const MUIDropDownTimePicker: FC<MUIDropDownTimePickerProps> = (props) => {
-    const { fieldProps = {} as IMUIDropDownTimePickerProps,
+export const MUIDropDownTimePicker: FC<DropDownTimePickerProps> = (props) => {
+    const { fieldProps = {} as DropDownTimePickerFieldProps,
         fieldConfig = {} as FormConfig,
         formikProps = {} as FormikValues, } = props;
     const fieldError = getFieldError((fieldProps.name || ''), formikProps);
