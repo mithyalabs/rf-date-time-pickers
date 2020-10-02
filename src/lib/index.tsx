@@ -1,12 +1,12 @@
 import {attachField} from 'react-forms'
 import React from 'react';
 import { MUIDatePicker, MUITimePicker } from './MUIDateTimePicker'
-export { MUIDatePicker, MUITimePicker } from './MUIDateTimePicker'
+export * from './MUIDateTimePicker'
 import { MUIDropDownTimePicker } from './MUIDropDownTimePicker'
-export { MUIDropDownTimePicker } from './MUIDropDownTimePicker'
-import '@date-io/date-fns'
+export * from './MUIDropDownTimePicker'
+import '@date-io/moment'
 
-attachField('date-picker-new', <MUIDatePicker />, { variant: 'inline', label: 'Select Date' });
-attachField('time-picker-new', <MUITimePicker />, { variant: 'inline', label: 'Select Time' });
-attachField('time-picker-select-new', <MUIDropDownTimePicker />)
+attachField('mui-date-picker', <MUIDatePicker />);
+attachField('mui-time-picker', <MUITimePicker />);
+attachField('mui-time-picker-select', <MUIDropDownTimePicker />)
 
