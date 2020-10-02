@@ -126,10 +126,9 @@ var MUIDropDownTimePicker = function (props) {
         React__default.createElement(core.FormHelperText, null, helperText)));
 };
 
-// "date-fns": "^2.16.1",^1.3.13
-reactForms.attachField('date-picker-new', React__default.createElement(MUIDatePicker, null));
-reactForms.attachField('time-picker-new', React__default.createElement(MUITimePicker, null));
-reactForms.attachField('time-picker-select-new', React__default.createElement(MUIDropDownTimePicker, null));
+reactForms.attachField('mui-date-picker', React__default.createElement(MUIDatePicker, null));
+reactForms.attachField('mui-time-picker', React__default.createElement(MUITimePicker, null));
+reactForms.attachField('mui-time-picker-select', React__default.createElement(MUIDropDownTimePicker, null));
 
 var index = './lib';
 
