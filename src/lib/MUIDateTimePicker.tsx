@@ -1,12 +1,15 @@
 import * as React from 'react';
-import { KeyboardDatePicker} from '@material-ui/pickers/DatePicker';
+import { KeyboardDatePicker, KeyboardDatePickerProps} from '@material-ui/pickers/DatePicker';
 import { TimePickerProps} from '@material-ui/pickers/TimePicker';
 import { KeyboardTimePicker} from '@material-ui/pickers/TimePicker';
 import { FormikValues } from 'formik';
 import { get } from 'lodash';
 import {IFieldProps} from 'react-forms'
-import { IMUIDatePickerProps } from 'react-forms/dist/lib/ml-form-builder/lib/MUIDateTimePicker';
+// import { IMUIDatePickerProps } from 'react-forms/dist/lib/ml-form-builder/lib/MUIDateTimePicker';
 
+export interface IMUIDatePickerProps extends KeyboardDatePickerProps {
+    outputFormat?: string
+}
 
 export const MUIDatePicker: React.FC<IFieldProps & { fieldProps?: IMUIDatePickerProps }> = (props) => {
     const { fieldProps = {} as IMUIDatePickerProps, formikProps = {} as FormikValues } = props;
@@ -18,7 +21,7 @@ export const MUIDatePicker: React.FC<IFieldProps & { fieldProps?: IMUIDatePicker
             formikProps.setFieldValue(fieldProps.name, date, false);
         }
         else{
-            let data = new Date(date)
+            let data = new Date(date).toISOString
             // (outputFormat === 'date') ? date :moment(date).format(outputFormat || fieldProps.format || 'MM/DD/YYYY')
             formikProps.setFieldValue(fieldProps.name, data , false);
         }    

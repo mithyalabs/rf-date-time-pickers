@@ -61,7 +61,7 @@ var MUIDatePicker = function (props) {
             formikProps.setFieldValue(fieldProps.name, date, false);
         }
         else {
-            var data = new Date(date);
+            var data = new Date(date).toISOString;
             // (outputFormat === 'date') ? date :moment(date).format(outputFormat || fieldProps.format || 'MM/DD/YYYY')
             formikProps.setFieldValue(fieldProps.name, data, false);
         }
@@ -126,8 +126,9 @@ var MUIDropDownTimePicker = function (props) {
         React__default.createElement(core.FormHelperText, null, helperText)));
 };
 
-reactForms.attachField('date-picker-new', React__default.createElement(MUIDatePicker, null), { variant: 'inline', label: 'Select Date' });
-reactForms.attachField('time-picker-new', React__default.createElement(MUITimePicker, null), { variant: 'inline', label: 'Select Time' });
+// "date-fns": "^2.16.1",^1.3.13
+reactForms.attachField('date-picker-new', React__default.createElement(MUIDatePicker, null));
+reactForms.attachField('time-picker-new', React__default.createElement(MUITimePicker, null));
 reactForms.attachField('time-picker-select-new', React__default.createElement(MUIDropDownTimePicker, null));
 
 var index = './lib';
