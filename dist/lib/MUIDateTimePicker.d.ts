@@ -1,7 +1,10 @@
 import * as React from 'react';
+import { KeyboardDatePickerProps } from '@material-ui/pickers/DatePicker';
 import { TimePickerProps } from '@material-ui/pickers/TimePicker';
 import { IFieldProps } from 'react-forms';
-import { IMUIDatePickerProps } from 'react-forms/dist/lib/ml-form-builder/lib/MUIDateTimePicker';
+export interface IMUIDatePickerProps extends KeyboardDatePickerProps {
+    outputFormat?: string;
+}
 export declare const MUIDatePicker: React.FC<IFieldProps & {
     fieldProps?: IMUIDatePickerProps;
 }>;

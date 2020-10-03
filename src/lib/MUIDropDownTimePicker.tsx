@@ -1,12 +1,30 @@
-import { FormControl, FormControlProps, InputLabel, InputLabelProps, MenuItem, MenuItemProps, Select, FormHelperText } from '@material-ui/core';
+import { FormControl, FormControlProps, InputLabel, InputLabelProps, MenuItem, MenuItemProps, Select, FormHelperText, SelectProps, FormHelperTextProps } from '@material-ui/core';
 import { FormikValues } from 'formik';
 import { get, isString, map } from 'lodash';
 import React, { FC } from 'react';
 import moment from 'moment'
-import { FormConfig } from 'react-forms';
-import { IMUIDropDownTimePickerProps, MUIDropDownTimePickerProps } from 'react-forms/dist/lib/ml-form-builder/lib/MUIDropDownTimePicker';
+import { FormConfig, IFieldProps } from 'react-forms';
+// import { IMUIDropDownTimePickerProps, MUIDropDownTimePickerProps } from 'react-forms/dist/lib/ml-form-builder/lib/MUIDropDownTimePicker';
+// import { getFieldError, MenuOptionObject } from 'react-forms/dist/lib/ml-form-builder/Utils';
 import { getFieldError, MenuOptionObject } from './Utils';
 
+export interface DropDownTimePickerFieldProps extends SelectProps {
+    label?: string
+    emptyItem?: string | boolean
+    helperText?: string
+    formControlProps?: FormControlProps
+    formHelperTextProps?: FormHelperTextProps
+    startTime?: string | Date
+    endTime?: string | Date
+    interval?: number
+    amPm?: boolean
+    emptyMenuItemProps?: object
+    menuItemProps?: object
+    inputLabelProps?: object
+}
+export interface DropDownTimePickerProps extends IFieldProps {
+    fieldProps?: DropDownTimePickerFieldProps
+}
 
 const getOptions = (startTime: string | Date, endTime: string | Date, interval: number, amPm: boolean) => {
     let start = amPm ? moment(startTime, 'hh:mm a').toDate() : moment(startTime, 'HH:mm').toDate()
@@ -19,8 +37,8 @@ const getOptions = (startTime: string | Date, endTime: string | Date, interval: 
     }
     return list;
 }
-export const MUIDropDownTimePicker: FC<MUIDropDownTimePickerProps> = (props) => {
-    const { fieldProps = {} as IMUIDropDownTimePickerProps,
+export const MUIDropDownTimePicker: FC<DropDownTimePickerProps> = (props) => {
+    const { fieldProps = {} as DropDownTimePickerFieldProps,
         fieldConfig = {} as FormConfig,
         formikProps = {} as FormikValues, } = props;
     const fieldError = getFieldError((fieldProps.name || ''), formikProps);

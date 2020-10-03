@@ -1,3 +1,3 @@
-export { MUIDatePicker, MUITimePicker } from './MUIDateTimePicker';
-export { MUIDropDownTimePicker } from './MUIDropDownTimePicker';
-import '@date-io/date-fns';
+export * from './MUIDateTimePicker';
+export * from './MUIDropDownTimePicker';
+import '@date-io/moment';
