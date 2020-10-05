@@ -23,7 +23,6 @@ export const MUIDatePicker: React.FC<IFieldProps & { fieldProps?: IMUIDatePicker
         else{
             let dateObject = new Date(date);
             let data = dateObject.toISOString();
-            console.log("data1 = ",data);
             // (outputFormat === 'date') ? date :moment(date).format(outputFormat || fieldProps.format || 'MM/DD/YYYY')
             formikProps.setFieldValue(fieldProps.name, data , false);
         }    
