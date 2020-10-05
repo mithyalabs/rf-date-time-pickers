@@ -61,7 +61,8 @@ var MUIDatePicker = function (props) {
             formikProps.setFieldValue(fieldProps.name, date, false);
         }
         else {
-            var data = new Date(date);
+            var dateObject = new Date(date);
+            var data = dateObject.toISOString();
             // (outputFormat === 'date') ? date :moment(date).format(outputFormat || fieldProps.format || 'MM/DD/YYYY')
             formikProps.setFieldValue(fieldProps.name, data, false);
         }
