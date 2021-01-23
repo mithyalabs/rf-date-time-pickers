@@ -43,10 +43,18 @@ function __rest(s, e) {
     return t;
 }
 
+var getFieldError = function (fieldName, formikProps) {
+    var fieldError = get(formikProps, "errors." + fieldName);
+    var isTouched = get(formikProps, "touched." + fieldName);
+    if (!isTouched && formikProps.submitCount < 1)
+        return '';
+    return fieldError;
+};
+
 var MUIDatePicker = function (props) {
-    var _a = props.fieldProps, fieldProps = _a === void 0 ? {} : _a, _b = props.formikProps, formikProps = _b === void 0 ? {} : _b;
+    var _a = props.fieldProps, fieldProps = _a === void 0 ? {} : _a, _b = props.formikProps, formikProps = _b === void 0 ? {} : _b, fieldConfig = props.fieldConfig;
     var value = get(formikProps, "values." + fieldProps.name);
-    var fieldError = get(formikProps, "errors." + fieldProps.name);
+    var fieldError = getFieldError((fieldConfig === null || fieldConfig === void 0 ? void 0 : fieldConfig.valueKey) || '', formikProps);
     var outputFormat = fieldProps.outputFormat, datePickerProps = __rest(fieldProps, ["outputFormat"]);
     var handleDateChange = function (date) {
         if (date === null) {
@@ -74,14 +82,6 @@ var MUITimePicker = function (props) {
     };
     var updatedProps = __assign(__assign({}, fieldProps), { error: !!fieldError, helperText: (fieldError || ''), onChange: handleTimeChange, value: (!value) ? null : undefined, inputValue: (!value) ? '' : value });
     return (createElement(KeyboardTimePicker, __assign({}, updatedProps)));
-};
-
-var getFieldError = function (fieldName, formikProps) {
-    var fieldError = get(formikProps, "errors." + fieldName);
-    var isTouched = get(formikProps, "touched." + fieldName);
-    if (!isTouched && formikProps.submitCount < 1)
-        return '';
-    return fieldError;
 };
 
 var getOptions = function (startTime, endTime, interval, amPm) {

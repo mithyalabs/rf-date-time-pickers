@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { KeyboardDatePicker, KeyboardDatePickerProps} from '@material-ui/pickers/DatePicker';
-import { TimePickerProps} from '@material-ui/pickers/TimePicker';
-import { KeyboardTimePicker} from '@material-ui/pickers/TimePicker';
+import { KeyboardDatePicker, KeyboardDatePickerProps } from '@material-ui/pickers/DatePicker';
+import { TimePickerProps } from '@material-ui/pickers/TimePicker';
+import { KeyboardTimePicker } from '@material-ui/pickers/TimePicker';
 import { FormikValues } from 'formik';
 import { get } from 'lodash';
-import {IFieldProps} from 'react-forms'
+import { IFieldProps } from 'react-forms'
+import { getFieldError } from './Utils';
 // import { IMUIDatePickerProps } from 'react-forms/dist/lib/ml-form-builder/lib/MUIDateTimePicker';
 
 export interface IMUIDatePickerProps extends KeyboardDatePickerProps {
@@ -12,20 +13,20 @@ export interface IMUIDatePickerProps extends KeyboardDatePickerProps {
 }
 
 export const MUIDatePicker: React.FC<IFieldProps & { fieldProps?: IMUIDatePickerProps }> = (props) => {
-    const { fieldProps = {} as IMUIDatePickerProps, formikProps = {} as FormikValues } = props;
+    const { fieldProps = {} as IMUIDatePickerProps, formikProps = {} as FormikValues, fieldConfig } = props;
     const value = get(formikProps, `values.${fieldProps.name}`);
-    const fieldError = get(formikProps, `errors.${fieldProps.name}`);
+    const fieldError = getFieldError(fieldConfig?.valueKey || '', formikProps);
     const { outputFormat, ...datePickerProps } = fieldProps;
     const handleDateChange = (date: any | null) => {
-        if (date  === null) {
+        if (date === null) {
             formikProps.setFieldValue(fieldProps.name, date, false);
         }
-        else{
+        else {
             let dateObject = new Date(date);
             let data = dateObject.toISOString();
             // (outputFormat === 'date') ? date :moment(date).format(outputFormat || fieldProps.format || 'MM/DD/YYYY')
-            formikProps.setFieldValue(fieldProps.name, data , false);
-        }    
+            formikProps.setFieldValue(fieldProps.name, data, false);
+        }
     };
     const updatedProps = {
         ...datePickerProps,
@@ -59,7 +60,7 @@ export const MUITimePicker: React.FC<IFieldProps & { fieldProps?: TimePickerProp
         if (time === null)
             formikProps.setFieldValue(fieldProps.name, time, false);
         else
-            formikProps.setFieldValue(fieldProps.name, new Date(time).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric',hour12: false }), false)
+            formikProps.setFieldValue(fieldProps.name, new Date(time).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: false }), false)
     }
     const updatedProps = {
         ...fieldProps,
