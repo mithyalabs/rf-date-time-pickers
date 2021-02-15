@@ -15,12 +15,13 @@
   "author": "",
   "license": "ISC",
   "peerDependencies": {
-    "@material-ui/core": "^2.10.6",
+    "@material-ui/core": "^4.11.2",
     "@material-ui/pickers": "^3.2.8",
     "formik": "^2.1.1",
     "lodash": "^4.17.15",
-    "moment": "^2.24.0",
+    "moment": "^2.29.1",
     "react": "^16.12.0",
+    "react-dom": "^16.12.0",
     "react-forms": "git+https://github.com/mithyalabs/react-forms.git"
   },
   "devDependencies": {
@@ -43,5 +44,7 @@
     "rollup-plugin-typescript2": "^0.25.3",
     "typescript": "^3.7.4"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@material-ui/icons": "^4.11.2"
+  }
 }
