@@ -12,7 +12,6 @@ var TimePicker = require('@material-ui/pickers/TimePicker');
 var lodash = require('lodash');
 var core = require('@material-ui/core');
 var styles = require('@material-ui/core/styles');
-var utils = _interopDefault(require('@material-ui/core/utils'));
 var moment = _interopDefault(require('moment'));
 
 /*! *****************************************************************************
@@ -94,143 +93,6 @@ var MUITimePicker = function (props) {
     return (React.createElement(TimePicker.KeyboardTimePicker, __assign({}, updatedProps)));
 };
 
-function unwrapExports (x) {
-	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
-}
-
-function createCommonjsModule(fn, module) {
-	return module = { exports: {} }, fn(module, module.exports), module.exports;
-}
-
-var interopRequireDefault = createCommonjsModule(function (module) {
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {
-    "default": obj
-  };
-}
-
-module.exports = _interopRequireDefault;
-});
-
-unwrapExports(interopRequireDefault);
-
-var _typeof_1 = createCommonjsModule(function (module) {
-function _typeof(obj) {
-  "@babel/helpers - typeof";
-
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    module.exports = _typeof = function _typeof(obj) {
-      return typeof obj;
-    };
-  } else {
-    module.exports = _typeof = function _typeof(obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
-
-  return _typeof(obj);
-}
-
-module.exports = _typeof;
-});
-
-var interopRequireWildcard = createCommonjsModule(function (module) {
-function _getRequireWildcardCache() {
-  if (typeof WeakMap !== "function") return null;
-  var cache = new WeakMap();
-
-  _getRequireWildcardCache = function _getRequireWildcardCache() {
-    return cache;
-  };
-
-  return cache;
-}
-
-function _interopRequireWildcard(obj) {
-  if (obj && obj.__esModule) {
-    return obj;
-  }
-
-  if (obj === null || _typeof_1(obj) !== "object" && typeof obj !== "function") {
-    return {
-      "default": obj
-    };
-  }
-
-  var cache = _getRequireWildcardCache();
-
-  if (cache && cache.has(obj)) {
-    return cache.get(obj);
-  }
-
-  var newObj = {};
-  var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-
-  for (var key in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) {
-      var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-
-      if (desc && (desc.get || desc.set)) {
-        Object.defineProperty(newObj, key, desc);
-      } else {
-        newObj[key] = obj[key];
-      }
-    }
-  }
-
-  newObj["default"] = obj;
-
-  if (cache) {
-    cache.set(obj, newObj);
-  }
-
-  return newObj;
-}
-
-module.exports = _interopRequireWildcard;
-});
-
-unwrapExports(interopRequireWildcard);
-
-var createSvgIcon = createCommonjsModule(function (module, exports) {
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-Object.defineProperty(exports, "default", {
-  enumerable: true,
-  get: function get() {
-    return utils.createSvgIcon;
-  }
-});
-});
-
-unwrapExports(createSvgIcon);
-
-var Clear = createCommonjsModule(function (module, exports) {
-
-
-
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var React = interopRequireWildcard(React__default);
-
-var _createSvgIcon = interopRequireDefault(createSvgIcon);
-
-var _default = (0, _createSvgIcon.default)( /*#__PURE__*/React.createElement("path", {
-  d: "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-}), 'Clear');
-
-exports.default = _default;
-});
-
-var ClearIcon = unwrapExports(Clear);
-
 function _extends() {
   _extends = Object.assign || function (target) {
     for (var i = 1; i < arguments.length; i++) {
@@ -290,6 +152,10 @@ function deepmerge(target, source) {
   }
 
   return output;
+}
+
+function createCommonjsModule(fn, module) {
+	return module = { exports: {} }, fn(module, module.exports), module.exports;
 }
 
 /** @license React v16.13.1
@@ -5804,7 +5670,7 @@ var MUIDropDownTimePicker = function (props) {
                             return (React__default.createElement(core.MenuItem, { value: min, key: index, disabled: disable }, min));
                         return React__default.createElement("div", { key: index });
                     })))),
-            clearable && React__default.createElement(core.Box, null, clearButton ? clearButton : React__default.createElement(core.IconButton, __assign({ size: 'small', onClick: onClear }, iconButtonProps), clearIcon ? clearIcon : React__default.createElement(ClearIcon, null)))),
+            clearable && React__default.createElement(core.Box, null, clearButton ? clearButton : React__default.createElement(core.IconButton, __assign({ size: 'small', onClick: onClear }, iconButtonProps), clearIcon || null))),
         fieldError && React__default.createElement(core.Typography, { variant: 'overline', className: fieldError ? classes.errorField : '' }, fieldError)));
 };
 var useStyles = makeStyles(function () {

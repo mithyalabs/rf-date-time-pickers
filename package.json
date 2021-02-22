@@ -6,7 +6,7 @@
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",
   "scripts": {
-    "build": "rollup -c"
+    "build": "rm -rf dist/ && rollup -c"
   },
   "files": [
     "dist"
@@ -43,8 +43,5 @@
     "rollup-plugin-peer-deps-external": "^2.2.0",
     "rollup-plugin-typescript2": "^0.25.3",
     "typescript": "^3.7.4"
-  },
-  "dependencies": {
-    "@material-ui/icons": "^4.11.2"
   }
 }

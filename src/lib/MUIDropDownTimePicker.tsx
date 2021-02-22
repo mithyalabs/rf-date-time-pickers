@@ -1,6 +1,6 @@
 import { Box, BoxProps, FormControl, IconButton, IconButtonProps, InputLabel, MenuItem, Select, SelectProps, Typography, TypographyProps } from '@material-ui/core';
 import { createStyles, Theme } from '@material-ui/core/styles';
-import ClearIcon from '@material-ui/icons/Clear';
+// import ClearIcon from '@material-ui/icons/Clear';
 import { makeStyles } from '@material-ui/styles';
 import { FormikValues } from 'formik';
 import { get, isString } from 'lodash';
@@ -161,7 +161,7 @@ export const MUIDropDownTimePicker: FC<IProps> = (props) => {
             </Select>
           </FormControl>
         </Box>
-        {clearable && <Box>{clearButton ? clearButton : <IconButton size='small' onClick={onClear} {...iconButtonProps}>{clearIcon ? clearIcon : <ClearIcon />}</IconButton>}</Box>}
+        {clearable && <Box>{clearButton ? clearButton : <IconButton size='small' onClick={onClear} {...iconButtonProps}>{clearIcon|| null}</IconButton>}</Box>}
       </Box>
       {
         fieldError && <Typography variant='overline' className={fieldError ? classes.errorField : ''}>{fieldError}</Typography>
