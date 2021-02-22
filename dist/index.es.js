@@ -1,9 +1,8 @@
 import { attachField } from 'react-forms';
-import React, { createElement, useCallback } from 'react';
-import { DatePicker } from '@material-ui/pickers/DatePicker';
-import { KeyboardTimePicker } from '@material-ui/pickers/TimePicker';
-import { get, isString } from 'lodash';
+import React, { useCallback } from 'react';
 import { Box, Typography, FormControl, InputLabel, Select, MenuItem, IconButton } from '@material-ui/core';
+import { KeyboardDatePicker, KeyboardTimePicker } from '@material-ui/pickers';
+import { get, isString } from 'lodash';
 import { createStyles } from '@material-ui/core/styles';
 import moment from 'moment';
 
@@ -61,26 +60,9 @@ var MUIDatePicker = function (props) {
         }
     };
     var updatedProps = __assign(__assign({}, datePickerProps), { error: !!fieldError, helperText: fieldError || "", onChange: handleDateChange, value: value || null, inputValue: value || null, format: outputFormat });
-    return (createElement(Box, null,
-        createElement(Typography, __assign({}, headerProps), header),
-        createElement(DatePicker, __assign({}, updatedProps))));
-};
-var MUITimePicker = function (props) {
-    var _a = props.fieldProps, fieldProps = _a === void 0 ? {} : _a, _b = props.formikProps, formikProps = _b === void 0 ? {} : _b;
-    var fieldError = get(formikProps, "errors." + fieldProps.name);
-    var value = get(formikProps, "values." + fieldProps.name);
-    var handleTimeChange = function (time) {
-        if (time === null)
-            formikProps.setFieldValue(fieldProps.name, time, false);
-        else
-            formikProps.setFieldValue(fieldProps.name, new Date(time).toLocaleString("en-US", {
-                hour: "numeric",
-                minute: "numeric",
-                hour12: false,
-            }), false);
-    };
-    var updatedProps = __assign(__assign({}, fieldProps), { error: !!fieldError, helperText: fieldError || "", onChange: handleTimeChange, value: !value ? null : undefined, inputValue: !value ? "" : value });
-    return createElement(KeyboardTimePicker, __assign({}, updatedProps));
+    return (React.createElement(Box, null,
+        React.createElement(Typography, __assign({}, headerProps), header),
+        React.createElement(KeyboardDatePicker, __assign({}, updatedProps))));
 };
 
 function _extends() {
@@ -6040,9 +6022,27 @@ var MINUTES = ['00',
     '58',
     '59'];
 
-attachField('mui-date-picker', React.createElement(MUIDatePicker, null));
-attachField('mui-time-picker', React.createElement(MUITimePicker, null));
-attachField('mui-time-picker-select', React.createElement(MUIDropDownTimePicker, null));
+var MUITimePicker = function (props) {
+    var _a = props.fieldProps, fieldProps = _a === void 0 ? {} : _a, _b = props.formikProps, formikProps = _b === void 0 ? {} : _b;
+    var fieldError = get(formikProps, "errors." + fieldProps.name);
+    var value = get(formikProps, "values." + fieldProps.name);
+    var handleTimeChange = function (time) {
+        if (time === null)
+            formikProps.setFieldValue(fieldProps.name, time, false);
+        else
+            formikProps.setFieldValue(fieldProps.name, new Date(time).toLocaleString("en-US", {
+                hour: "numeric",
+                minute: "numeric",
+                hour12: false,
+            }), false);
+    };
+    var updatedProps = __assign(__assign({}, fieldProps), { error: !!fieldError, helperText: fieldError || "", onChange: handleTimeChange, value: !value ? null : undefined, inputValue: !value ? "" : value });
+    return React.createElement(KeyboardTimePicker, __assign({}, updatedProps));
+};
+
+attachField("mui-date-picker", React.createElement(MUIDatePicker, null));
+attachField("mui-time-picker", React.createElement(MUITimePicker, null));
+attachField("mui-time-picker-select", React.createElement(MUIDropDownTimePicker, null));
 
 var index = './lib';
 

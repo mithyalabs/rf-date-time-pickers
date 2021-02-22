@@ -4,10 +4,9 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var reactForms = require('react-forms');
 var React = require('react');
-var DatePicker = require('@material-ui/pickers/DatePicker');
-var TimePicker = require('@material-ui/pickers/TimePicker');
-var lodash = require('lodash');
 var core = require('@material-ui/core');
+var pickers = require('@material-ui/pickers');
+var lodash = require('lodash');
 var styles = require('@material-ui/core/styles');
 var moment = require('moment');
 
@@ -70,26 +69,9 @@ var MUIDatePicker = function (props) {
         }
     };
     var updatedProps = __assign(__assign({}, datePickerProps), { error: !!fieldError, helperText: fieldError || "", onChange: handleDateChange, value: value || null, inputValue: value || null, format: outputFormat });
-    return (React.createElement(core.Box, null,
-        React.createElement(core.Typography, __assign({}, headerProps), header),
-        React.createElement(DatePicker.DatePicker, __assign({}, updatedProps))));
-};
-var MUITimePicker = function (props) {
-    var _a = props.fieldProps, fieldProps = _a === void 0 ? {} : _a, _b = props.formikProps, formikProps = _b === void 0 ? {} : _b;
-    var fieldError = lodash.get(formikProps, "errors." + fieldProps.name);
-    var value = lodash.get(formikProps, "values." + fieldProps.name);
-    var handleTimeChange = function (time) {
-        if (time === null)
-            formikProps.setFieldValue(fieldProps.name, time, false);
-        else
-            formikProps.setFieldValue(fieldProps.name, new Date(time).toLocaleString("en-US", {
-                hour: "numeric",
-                minute: "numeric",
-                hour12: false,
-            }), false);
-    };
-    var updatedProps = __assign(__assign({}, fieldProps), { error: !!fieldError, helperText: fieldError || "", onChange: handleTimeChange, value: !value ? null : undefined, inputValue: !value ? "" : value });
-    return React.createElement(TimePicker.KeyboardTimePicker, __assign({}, updatedProps));
+    return (React__default['default'].createElement(core.Box, null,
+        React__default['default'].createElement(core.Typography, __assign({}, headerProps), header),
+        React__default['default'].createElement(pickers.KeyboardDatePicker, __assign({}, updatedProps))));
 };
 
 function _extends() {
@@ -6049,9 +6031,27 @@ var MINUTES = ['00',
     '58',
     '59'];
 
-reactForms.attachField('mui-date-picker', React__default['default'].createElement(MUIDatePicker, null));
-reactForms.attachField('mui-time-picker', React__default['default'].createElement(MUITimePicker, null));
-reactForms.attachField('mui-time-picker-select', React__default['default'].createElement(MUIDropDownTimePicker, null));
+var MUITimePicker = function (props) {
+    var _a = props.fieldProps, fieldProps = _a === void 0 ? {} : _a, _b = props.formikProps, formikProps = _b === void 0 ? {} : _b;
+    var fieldError = lodash.get(formikProps, "errors." + fieldProps.name);
+    var value = lodash.get(formikProps, "values." + fieldProps.name);
+    var handleTimeChange = function (time) {
+        if (time === null)
+            formikProps.setFieldValue(fieldProps.name, time, false);
+        else
+            formikProps.setFieldValue(fieldProps.name, new Date(time).toLocaleString("en-US", {
+                hour: "numeric",
+                minute: "numeric",
+                hour12: false,
+            }), false);
+    };
+    var updatedProps = __assign(__assign({}, fieldProps), { error: !!fieldError, helperText: fieldError || "", onChange: handleTimeChange, value: !value ? null : undefined, inputValue: !value ? "" : value });
+    return React__default['default'].createElement(pickers.KeyboardTimePicker, __assign({}, updatedProps));
+};
+
+reactForms.attachField("mui-date-picker", React__default['default'].createElement(MUIDatePicker, null));
+reactForms.attachField("mui-time-picker", React__default['default'].createElement(MUITimePicker, null));
+reactForms.attachField("mui-time-picker-select", React__default['default'].createElement(MUIDropDownTimePicker, null));
 
 var index = './lib';
 
