@@ -1,6 +1,6 @@
 import { attachField } from 'react-forms';
-import React__default, { createElement, useCallback } from 'react';
-import { KeyboardDatePicker } from '@material-ui/pickers/DatePicker';
+import React, { createElement, useCallback } from 'react';
+import { DatePicker } from '@material-ui/pickers/DatePicker';
 import { KeyboardTimePicker } from '@material-ui/pickers/TimePicker';
 import { get, isString } from 'lodash';
 import { Box, Typography, FormControl, InputLabel, Select, MenuItem, IconButton } from '@material-ui/core';
@@ -8,18 +8,18 @@ import { createStyles } from '@material-ui/core/styles';
 import moment from 'moment';
 
 /*! *****************************************************************************
-Copyright (c) Microsoft Corporation.
+Copyright (c) Microsoft Corporation. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
 
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted.
+THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+MERCHANTABLITY OR NON-INFRINGEMENT.
 
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
+See the Apache Version 2.0 License for specific language governing permissions
+and limitations under the License.
 ***************************************************************************** */
 
 var __assign = function() {
@@ -45,32 +45,25 @@ function __rest(s, e) {
     return t;
 }
 
-var getFieldError = function (fieldName, formikProps) {
-    var fieldError = get(formikProps, "errors." + fieldName);
-    var isTouched = get(formikProps, "touched." + fieldName);
-    if (!isTouched && formikProps.submitCount < 1)
-        return '';
-    return fieldError;
-};
-
 var MUIDatePicker = function (props) {
-    var _a = props.fieldProps, fieldProps = _a === void 0 ? {} : _a, _b = props.formikProps, formikProps = _b === void 0 ? {} : _b, fieldConfig = props.fieldConfig;
-    var value = get(formikProps, "values." + fieldProps.name);
-    var fieldError = getFieldError((fieldConfig === null || fieldConfig === void 0 ? void 0 : fieldConfig.valueKey) || '', formikProps);
-    var outputFormat = fieldProps.outputFormat, datePickerProps = __rest(fieldProps, ["outputFormat"]);
+    var _a = props.formikProps, formikProps = _a === void 0 ? {} : _a, _b = props.fieldProps, fieldProps = _b === void 0 ? {} : _b;
+    var _c = fieldProps.name, name = _c === void 0 ? "" : _c;
+    var value = get(formikProps, "values." + name);
+    var fieldError = get(formikProps, "errors." + fieldProps.name);
+    var _d = fieldProps.outputFormat, outputFormat = _d === void 0 ? "DD/MM/YYYY" : _d, header = fieldProps.header, headerProps = fieldProps.headerProps, datePickerProps = __rest(fieldProps, ["outputFormat", "header", "headerProps"]);
     var handleDateChange = function (date) {
         if (date === null) {
-            formikProps.setFieldValue(fieldProps.name, date, false);
+            formikProps.setFieldValue(name, date, false);
         }
         else {
-            var dateObject = new Date(date);
-            var data = dateObject.toISOString();
-            // (outputFormat === 'date') ? date :moment(date).format(outputFormat || fieldProps.format || 'MM/DD/YYYY')
-            formikProps.setFieldValue(fieldProps.name, data, false);
+            var dateValue = date.format();
+            formikProps.setFieldValue(name, dateValue, false);
         }
     };
-    var updatedProps = __assign(__assign({}, datePickerProps), { error: !!fieldError, helperText: (fieldError || ''), onChange: handleDateChange, value: (!value) ? null : undefined, inputValue: (!value) ? '' : value, format: fieldProps.format || 'mm/dd/yyyy' });
-    return (createElement(KeyboardDatePicker, __assign({}, updatedProps)));
+    var updatedProps = __assign(__assign({}, datePickerProps), { error: !!fieldError, helperText: fieldError || "", onChange: handleDateChange, value: value || null, inputValue: value || null, format: outputFormat });
+    return (createElement(Box, null,
+        createElement(Typography, __assign({}, headerProps), header),
+        createElement(DatePicker, __assign({}, updatedProps))));
 };
 var MUITimePicker = function (props) {
     var _a = props.fieldProps, fieldProps = _a === void 0 ? {} : _a, _b = props.formikProps, formikProps = _b === void 0 ? {} : _b;
@@ -80,10 +73,14 @@ var MUITimePicker = function (props) {
         if (time === null)
             formikProps.setFieldValue(fieldProps.name, time, false);
         else
-            formikProps.setFieldValue(fieldProps.name, new Date(time).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: false }), false);
+            formikProps.setFieldValue(fieldProps.name, new Date(time).toLocaleString("en-US", {
+                hour: "numeric",
+                minute: "numeric",
+                hour12: false,
+            }), false);
     };
-    var updatedProps = __assign(__assign({}, fieldProps), { error: !!fieldError, helperText: (fieldError || ''), onChange: handleTimeChange, value: (!value) ? null : undefined, inputValue: (!value) ? '' : value });
-    return (createElement(KeyboardTimePicker, __assign({}, updatedProps)));
+    var updatedProps = __assign(__assign({}, fieldProps), { error: !!fieldError, helperText: fieldError || "", onChange: handleTimeChange, value: !value ? null : undefined, inputValue: !value ? "" : value });
+    return createElement(KeyboardTimePicker, __assign({}, updatedProps));
 };
 
 function _extends() {
@@ -147,8 +144,9 @@ function deepmerge(target, source) {
   return output;
 }
 
-function createCommonjsModule(fn, module) {
-	return module = { exports: {} }, fn(module, module.exports), module.exports;
+function createCommonjsModule(fn) {
+  var module = { exports: {} };
+	return fn(module, module.exports), module.exports;
 }
 
 /** @license React v16.13.1
@@ -196,6 +194,15 @@ var reactIs_production_min = {
 	isValidElementType: isValidElementType,
 	typeOf: typeOf
 };
+
+/** @license React v16.13.1
+ * react-is.development.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 
 var reactIs_development = createCommonjsModule(function (module, exports) {
 
@@ -369,34 +376,6 @@ exports.typeOf = typeOf;
   })();
 }
 });
-var reactIs_development_1 = reactIs_development.AsyncMode;
-var reactIs_development_2 = reactIs_development.ConcurrentMode;
-var reactIs_development_3 = reactIs_development.ContextConsumer;
-var reactIs_development_4 = reactIs_development.ContextProvider;
-var reactIs_development_5 = reactIs_development.Element;
-var reactIs_development_6 = reactIs_development.ForwardRef;
-var reactIs_development_7 = reactIs_development.Fragment;
-var reactIs_development_8 = reactIs_development.Lazy;
-var reactIs_development_9 = reactIs_development.Memo;
-var reactIs_development_10 = reactIs_development.Portal;
-var reactIs_development_11 = reactIs_development.Profiler;
-var reactIs_development_12 = reactIs_development.StrictMode;
-var reactIs_development_13 = reactIs_development.Suspense;
-var reactIs_development_14 = reactIs_development.isAsyncMode;
-var reactIs_development_15 = reactIs_development.isConcurrentMode;
-var reactIs_development_16 = reactIs_development.isContextConsumer;
-var reactIs_development_17 = reactIs_development.isContextProvider;
-var reactIs_development_18 = reactIs_development.isElement;
-var reactIs_development_19 = reactIs_development.isForwardRef;
-var reactIs_development_20 = reactIs_development.isFragment;
-var reactIs_development_21 = reactIs_development.isLazy;
-var reactIs_development_22 = reactIs_development.isMemo;
-var reactIs_development_23 = reactIs_development.isPortal;
-var reactIs_development_24 = reactIs_development.isProfiler;
-var reactIs_development_25 = reactIs_development.isStrictMode;
-var reactIs_development_26 = reactIs_development.isSuspense;
-var reactIs_development_27 = reactIs_development.isValidElementType;
-var reactIs_development_28 = reactIs_development.typeOf;
 
 var reactIs = createCommonjsModule(function (module) {
 
@@ -406,10 +385,6 @@ if (process.env.NODE_ENV === 'production') {
   module.exports = reactIs_development;
 }
 });
-var reactIs_1 = reactIs.isElement;
-var reactIs_2 = reactIs.isValidElementType;
-var reactIs_3 = reactIs.ForwardRef;
-var reactIs_4 = reactIs.Memo;
 
 /*
 object-assign
@@ -511,6 +486,13 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 var ReactPropTypesSecret_1 = ReactPropTypesSecret;
 
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 var printWarning = function() {};
 
 if (process.env.NODE_ENV !== 'production') {
@@ -604,6 +586,19 @@ checkPropTypes.resetWarningCache = function() {
 };
 
 var checkPropTypes_1 = checkPropTypes;
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+
+
+
 
 var has$1 = Function.call.bind(Object.prototype.hasOwnProperty);
 var printWarning$1 = function() {};
@@ -1182,6 +1177,15 @@ var factoryWithTypeCheckers = function(isValidElement, throwOnDirectAccess) {
   return ReactPropTypes;
 };
 
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
 function emptyFunction() {}
 function emptyFunctionWithReset() {}
 emptyFunctionWithReset.resetWarningCache = emptyFunction;
@@ -1234,7 +1238,6 @@ var factoryWithThrowingShims = function() {
   return ReactPropTypes;
 };
 
-var propTypes = createCommonjsModule(function (module) {
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -1242,6 +1245,7 @@ var propTypes = createCommonjsModule(function (module) {
  * LICENSE file in the root directory of this source tree.
  */
 
+var propTypes = createCommonjsModule(function (module) {
 if (process.env.NODE_ENV !== 'production') {
   var ReactIs = reactIs;
 
@@ -1255,7 +1259,6 @@ if (process.env.NODE_ENV !== 'production') {
   module.exports = factoryWithThrowingShims();
 }
 });
-var propTypes_1 = propTypes.elementType;
 
 function _defineProperty(obj, key, value) {
   if (key in obj) {
@@ -1296,6 +1299,283 @@ function exactProp(propTypes) {
     return null;
   }));
 }
+
+/** @license React v17.0.1
+ * react-is.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+var b$1=60103,c$1=60106,d$1=60107,e$1=60108,f$1=60114,g$1=60109,h$1=60110,k$1=60112,l$1=60113,m$1=60120,n$1=60115,p$1=60116,q$1=60121,r$1=60122,u=60117,v$1=60129,w$1=60131;
+if("function"===typeof Symbol&&Symbol.for){var x$1=Symbol.for;b$1=x$1("react.element");c$1=x$1("react.portal");d$1=x$1("react.fragment");e$1=x$1("react.strict_mode");f$1=x$1("react.profiler");g$1=x$1("react.provider");h$1=x$1("react.context");k$1=x$1("react.forward_ref");l$1=x$1("react.suspense");m$1=x$1("react.suspense_list");n$1=x$1("react.memo");p$1=x$1("react.lazy");q$1=x$1("react.block");r$1=x$1("react.server.block");u=x$1("react.fundamental");v$1=x$1("react.debug_trace_mode");w$1=x$1("react.legacy_hidden");}
+function y$1(a){if("object"===typeof a&&null!==a){var t=a.$$typeof;switch(t){case b$1:switch(a=a.type,a){case d$1:case f$1:case e$1:case l$1:case m$1:return a;default:switch(a=a&&a.$$typeof,a){case h$1:case k$1:case p$1:case n$1:case g$1:return a;default:return t}}case c$1:return t}}}var z$1=g$1,A$1=b$1,B=k$1,C=d$1,D=p$1,E=n$1,F=c$1,G=f$1,H=e$1,I=l$1;var ContextConsumer$1=h$1;var ContextProvider$1=z$1;var Element$1=A$1;var ForwardRef$1=B;var Fragment$1=C;var Lazy$1=D;var Memo$1=E;var Portal$1=F;var Profiler$1=G;var StrictMode$1=H;
+var Suspense$1=I;var isAsyncMode$1=function(){return !1};var isConcurrentMode$1=function(){return !1};var isContextConsumer$1=function(a){return y$1(a)===h$1};var isContextProvider$1=function(a){return y$1(a)===g$1};var isElement$1=function(a){return "object"===typeof a&&null!==a&&a.$$typeof===b$1};var isForwardRef$1=function(a){return y$1(a)===k$1};var isFragment$1=function(a){return y$1(a)===d$1};var isLazy$1=function(a){return y$1(a)===p$1};var isMemo$1=function(a){return y$1(a)===n$1};
+var isPortal$1=function(a){return y$1(a)===c$1};var isProfiler$1=function(a){return y$1(a)===f$1};var isStrictMode$1=function(a){return y$1(a)===e$1};var isSuspense$1=function(a){return y$1(a)===l$1};var isValidElementType$1=function(a){return "string"===typeof a||"function"===typeof a||a===d$1||a===f$1||a===v$1||a===e$1||a===l$1||a===m$1||a===w$1||"object"===typeof a&&null!==a&&(a.$$typeof===p$1||a.$$typeof===n$1||a.$$typeof===g$1||a.$$typeof===h$1||a.$$typeof===k$1||a.$$typeof===u||a.$$typeof===q$1||a[0]===r$1)?!0:!1};
+var typeOf$1=y$1;
+
+var reactIs_production_min$1 = {
+	ContextConsumer: ContextConsumer$1,
+	ContextProvider: ContextProvider$1,
+	Element: Element$1,
+	ForwardRef: ForwardRef$1,
+	Fragment: Fragment$1,
+	Lazy: Lazy$1,
+	Memo: Memo$1,
+	Portal: Portal$1,
+	Profiler: Profiler$1,
+	StrictMode: StrictMode$1,
+	Suspense: Suspense$1,
+	isAsyncMode: isAsyncMode$1,
+	isConcurrentMode: isConcurrentMode$1,
+	isContextConsumer: isContextConsumer$1,
+	isContextProvider: isContextProvider$1,
+	isElement: isElement$1,
+	isForwardRef: isForwardRef$1,
+	isFragment: isFragment$1,
+	isLazy: isLazy$1,
+	isMemo: isMemo$1,
+	isPortal: isPortal$1,
+	isProfiler: isProfiler$1,
+	isStrictMode: isStrictMode$1,
+	isSuspense: isSuspense$1,
+	isValidElementType: isValidElementType$1,
+	typeOf: typeOf$1
+};
+
+/** @license React v17.0.1
+ * react-is.development.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+var reactIs_development$1 = createCommonjsModule(function (module, exports) {
+
+if (process.env.NODE_ENV !== "production") {
+  (function() {
+
+// ATTENTION
+// When adding new symbols to this file,
+// Please consider also adding to 'react-devtools-shared/src/backend/ReactSymbols'
+// The Symbol used to tag the ReactElement-like types. If there is no native Symbol
+// nor polyfill, then a plain number is used for performance.
+var REACT_ELEMENT_TYPE = 0xeac7;
+var REACT_PORTAL_TYPE = 0xeaca;
+var REACT_FRAGMENT_TYPE = 0xeacb;
+var REACT_STRICT_MODE_TYPE = 0xeacc;
+var REACT_PROFILER_TYPE = 0xead2;
+var REACT_PROVIDER_TYPE = 0xeacd;
+var REACT_CONTEXT_TYPE = 0xeace;
+var REACT_FORWARD_REF_TYPE = 0xead0;
+var REACT_SUSPENSE_TYPE = 0xead1;
+var REACT_SUSPENSE_LIST_TYPE = 0xead8;
+var REACT_MEMO_TYPE = 0xead3;
+var REACT_LAZY_TYPE = 0xead4;
+var REACT_BLOCK_TYPE = 0xead9;
+var REACT_SERVER_BLOCK_TYPE = 0xeada;
+var REACT_FUNDAMENTAL_TYPE = 0xead5;
+var REACT_DEBUG_TRACING_MODE_TYPE = 0xeae1;
+var REACT_LEGACY_HIDDEN_TYPE = 0xeae3;
+
+if (typeof Symbol === 'function' && Symbol.for) {
+  var symbolFor = Symbol.for;
+  REACT_ELEMENT_TYPE = symbolFor('react.element');
+  REACT_PORTAL_TYPE = symbolFor('react.portal');
+  REACT_FRAGMENT_TYPE = symbolFor('react.fragment');
+  REACT_STRICT_MODE_TYPE = symbolFor('react.strict_mode');
+  REACT_PROFILER_TYPE = symbolFor('react.profiler');
+  REACT_PROVIDER_TYPE = symbolFor('react.provider');
+  REACT_CONTEXT_TYPE = symbolFor('react.context');
+  REACT_FORWARD_REF_TYPE = symbolFor('react.forward_ref');
+  REACT_SUSPENSE_TYPE = symbolFor('react.suspense');
+  REACT_SUSPENSE_LIST_TYPE = symbolFor('react.suspense_list');
+  REACT_MEMO_TYPE = symbolFor('react.memo');
+  REACT_LAZY_TYPE = symbolFor('react.lazy');
+  REACT_BLOCK_TYPE = symbolFor('react.block');
+  REACT_SERVER_BLOCK_TYPE = symbolFor('react.server.block');
+  REACT_FUNDAMENTAL_TYPE = symbolFor('react.fundamental');
+  symbolFor('react.scope');
+  symbolFor('react.opaque.id');
+  REACT_DEBUG_TRACING_MODE_TYPE = symbolFor('react.debug_trace_mode');
+  symbolFor('react.offscreen');
+  REACT_LEGACY_HIDDEN_TYPE = symbolFor('react.legacy_hidden');
+}
+
+// Filter certain DOM attributes (e.g. src, href) if their values are empty strings.
+
+var enableScopeAPI = false; // Experimental Create Event Handle API.
+
+function isValidElementType(type) {
+  if (typeof type === 'string' || typeof type === 'function') {
+    return true;
+  } // Note: typeof might be other than 'symbol' or 'number' (e.g. if it's a polyfill).
+
+
+  if (type === REACT_FRAGMENT_TYPE || type === REACT_PROFILER_TYPE || type === REACT_DEBUG_TRACING_MODE_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || type === REACT_LEGACY_HIDDEN_TYPE || enableScopeAPI ) {
+    return true;
+  }
+
+  if (typeof type === 'object' && type !== null) {
+    if (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || type.$$typeof === REACT_FUNDAMENTAL_TYPE || type.$$typeof === REACT_BLOCK_TYPE || type[0] === REACT_SERVER_BLOCK_TYPE) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function typeOf(object) {
+  if (typeof object === 'object' && object !== null) {
+    var $$typeof = object.$$typeof;
+
+    switch ($$typeof) {
+      case REACT_ELEMENT_TYPE:
+        var type = object.type;
+
+        switch (type) {
+          case REACT_FRAGMENT_TYPE:
+          case REACT_PROFILER_TYPE:
+          case REACT_STRICT_MODE_TYPE:
+          case REACT_SUSPENSE_TYPE:
+          case REACT_SUSPENSE_LIST_TYPE:
+            return type;
+
+          default:
+            var $$typeofType = type && type.$$typeof;
+
+            switch ($$typeofType) {
+              case REACT_CONTEXT_TYPE:
+              case REACT_FORWARD_REF_TYPE:
+              case REACT_LAZY_TYPE:
+              case REACT_MEMO_TYPE:
+              case REACT_PROVIDER_TYPE:
+                return $$typeofType;
+
+              default:
+                return $$typeof;
+            }
+
+        }
+
+      case REACT_PORTAL_TYPE:
+        return $$typeof;
+    }
+  }
+
+  return undefined;
+}
+var ContextConsumer = REACT_CONTEXT_TYPE;
+var ContextProvider = REACT_PROVIDER_TYPE;
+var Element = REACT_ELEMENT_TYPE;
+var ForwardRef = REACT_FORWARD_REF_TYPE;
+var Fragment = REACT_FRAGMENT_TYPE;
+var Lazy = REACT_LAZY_TYPE;
+var Memo = REACT_MEMO_TYPE;
+var Portal = REACT_PORTAL_TYPE;
+var Profiler = REACT_PROFILER_TYPE;
+var StrictMode = REACT_STRICT_MODE_TYPE;
+var Suspense = REACT_SUSPENSE_TYPE;
+var hasWarnedAboutDeprecatedIsAsyncMode = false;
+var hasWarnedAboutDeprecatedIsConcurrentMode = false; // AsyncMode should be deprecated
+
+function isAsyncMode(object) {
+  {
+    if (!hasWarnedAboutDeprecatedIsAsyncMode) {
+      hasWarnedAboutDeprecatedIsAsyncMode = true; // Using console['warn'] to evade Babel and ESLint
+
+      console['warn']('The ReactIs.isAsyncMode() alias has been deprecated, ' + 'and will be removed in React 18+.');
+    }
+  }
+
+  return false;
+}
+function isConcurrentMode(object) {
+  {
+    if (!hasWarnedAboutDeprecatedIsConcurrentMode) {
+      hasWarnedAboutDeprecatedIsConcurrentMode = true; // Using console['warn'] to evade Babel and ESLint
+
+      console['warn']('The ReactIs.isConcurrentMode() alias has been deprecated, ' + 'and will be removed in React 18+.');
+    }
+  }
+
+  return false;
+}
+function isContextConsumer(object) {
+  return typeOf(object) === REACT_CONTEXT_TYPE;
+}
+function isContextProvider(object) {
+  return typeOf(object) === REACT_PROVIDER_TYPE;
+}
+function isElement(object) {
+  return typeof object === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
+}
+function isForwardRef(object) {
+  return typeOf(object) === REACT_FORWARD_REF_TYPE;
+}
+function isFragment(object) {
+  return typeOf(object) === REACT_FRAGMENT_TYPE;
+}
+function isLazy(object) {
+  return typeOf(object) === REACT_LAZY_TYPE;
+}
+function isMemo(object) {
+  return typeOf(object) === REACT_MEMO_TYPE;
+}
+function isPortal(object) {
+  return typeOf(object) === REACT_PORTAL_TYPE;
+}
+function isProfiler(object) {
+  return typeOf(object) === REACT_PROFILER_TYPE;
+}
+function isStrictMode(object) {
+  return typeOf(object) === REACT_STRICT_MODE_TYPE;
+}
+function isSuspense(object) {
+  return typeOf(object) === REACT_SUSPENSE_TYPE;
+}
+
+exports.ContextConsumer = ContextConsumer;
+exports.ContextProvider = ContextProvider;
+exports.Element = Element;
+exports.ForwardRef = ForwardRef;
+exports.Fragment = Fragment;
+exports.Lazy = Lazy;
+exports.Memo = Memo;
+exports.Portal = Portal;
+exports.Profiler = Profiler;
+exports.StrictMode = StrictMode;
+exports.Suspense = Suspense;
+exports.isAsyncMode = isAsyncMode;
+exports.isConcurrentMode = isConcurrentMode;
+exports.isContextConsumer = isContextConsumer;
+exports.isContextProvider = isContextProvider;
+exports.isElement = isElement;
+exports.isForwardRef = isForwardRef;
+exports.isFragment = isFragment;
+exports.isLazy = isLazy;
+exports.isMemo = isMemo;
+exports.isPortal = isPortal;
+exports.isProfiler = isProfiler;
+exports.isStrictMode = isStrictMode;
+exports.isSuspense = isSuspense;
+exports.isValidElementType = isValidElementType;
+exports.typeOf = typeOf;
+  })();
+}
+});
+
+var reactIs$1 = createCommonjsModule(function (module) {
+
+if (process.env.NODE_ENV === 'production') {
+  module.exports = reactIs_production_min$1;
+} else {
+  module.exports = reactIs_development$1;
+}
+});
 
 // https://github.com/JamesMGreene/Function.name/blob/58b314d4a983110c3682f1228f845d39ccca1817/Function.name.js#L3
 
@@ -1345,10 +1625,10 @@ function getDisplayName(Component) {
 
   if (_typeof(Component) === 'object') {
     switch (Component.$$typeof) {
-      case reactIs_3:
+      case reactIs$1.ForwardRef:
         return getWrappedName(Component, Component.render, 'ForwardRef');
 
-      case reactIs_4:
+      case reactIs$1.Memo:
         return getWrappedName(Component, Component.type, 'memo');
 
       default:
@@ -1473,10 +1753,19 @@ function _createClass(Constructor, protoProps, staticProps) {
   return Constructor;
 }
 
+function _setPrototypeOf(o, p) {
+  _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+    o.__proto__ = p;
+    return o;
+  };
+
+  return _setPrototypeOf(o, p);
+}
+
 function _inheritsLoose(subClass, superClass) {
   subClass.prototype = Object.create(superClass.prototype);
   subClass.prototype.constructor = subClass;
-  subClass.__proto__ = superClass;
+  _setPrototypeOf(subClass, superClass);
 }
 
 function _assertThisInitialized(self) {
@@ -3463,7 +3752,7 @@ var Jss =
 function () {
   function Jss(options) {
     this.id = instanceCounter++;
-    this.version = "10.5.0";
+    this.version = "10.5.1";
     this.plugins = new PluginsRegistry();
     this.options = {
       id: {
@@ -3666,7 +3955,7 @@ var create = function create(options) {
  * A global Jss instance.
  */
 
-var jss = create();
+create();
 
 var now = Date.now();
 var fnValuesNs = "fnValues" + now;
@@ -4210,6 +4499,7 @@ var defaultUnits = {
   'font-size': px,
   'font-size-delta': px,
   'letter-spacing': px,
+  'text-decoration-thickness': px,
   'text-indent': px,
   'text-stroke': px,
   'text-stroke-width': px,
@@ -4243,6 +4533,7 @@ var defaultUnits = {
   // Grid properties
   grid: px,
   'grid-gap': px,
+  'row-gap': px,
   'grid-row-gap': px,
   'grid-column-gap': px,
   'grid-template-rows': px,
@@ -4303,7 +4594,7 @@ function iterate(prop, value, options) {
         value[_innerProp] = iterate(prop + "-" + _innerProp, value[_innerProp], options);
       }
     }
-  } else if (typeof value === 'number') {
+  } else if (typeof value === 'number' && !Number.isNaN(value)) {
     var unit = options[prop] || units[prop]; // Add the unit if available, except for the special case of 0px.
 
     if (unit && !(value === 0 && unit === px)) {
@@ -5120,24 +5411,24 @@ var multiKeyStore = {
   }
 };
 
-var ThemeContext = React__default.createContext(null);
+var ThemeContext = React.createContext(null);
 
 if (process.env.NODE_ENV !== 'production') {
   ThemeContext.displayName = 'ThemeContext';
 }
 
 function useTheme() {
-  var theme = React__default.useContext(ThemeContext);
+  var theme = React.useContext(ThemeContext);
 
   if (process.env.NODE_ENV !== 'production') {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    React__default.useDebugValue(theme);
+    React.useDebugValue(theme);
   }
 
   return theme;
 }
 
-var jss$1 = create(jssPreset()); // Use a singleton or the provided one by the context.
+var jss = create(jssPreset()); // Use a singleton or the provided one by the context.
 //
 // The counter-based approach doesn't tolerate any mistake.
 // It's much safer to use the same counter everywhere.
@@ -5148,12 +5439,12 @@ var sheetsManager = new Map();
 var defaultOptions = {
   disableGeneration: false,
   generateClassName: generateClassName,
-  jss: jss$1,
+  jss: jss,
   sheetsCache: null,
   sheetsManager: sheetsManager,
   sheetsRegistry: null
 };
-var StylesContext = React__default.createContext(defaultOptions);
+var StylesContext = React.createContext(defaultOptions);
 
 if (process.env.NODE_ENV !== 'production') {
   StylesContext.displayName = 'StylesContext';
@@ -5168,7 +5459,7 @@ function StylesProvider(props) {
       disableGeneration = _props$disableGenerat === void 0 ? false : _props$disableGenerat,
       localOptions = _objectWithoutProperties(props, ["children", "injectFirst", "disableGeneration"]);
 
-  var outerOptions = React__default.useContext(StylesContext);
+  var outerOptions = React.useContext(StylesContext);
 
   var context = _extends({}, outerOptions, {
     disableGeneration: disableGeneration
@@ -5205,7 +5496,7 @@ function StylesProvider(props) {
     });
   }
 
-  return /*#__PURE__*/React__default.createElement(StylesContext.Provider, {
+  return /*#__PURE__*/React.createElement(StylesContext.Provider, {
     value: context
   }, children);
 }
@@ -5515,10 +5806,10 @@ function detach(_ref4) {
 }
 
 function useSynchronousEffect(func, values) {
-  var key = React__default.useRef([]);
+  var key = React.useRef([]);
   var output; // Store "generation" key. Just returns a new object every time
 
-  var currentKey = React__default.useMemo(function () {
+  var currentKey = React.useMemo(function () {
     return {};
   }, values); // eslint-disable-line react-hooks/exhaustive-deps
   // "the first render", or "memo dropped the value"
@@ -5528,7 +5819,7 @@ function useSynchronousEffect(func, values) {
     output = func();
   }
 
-  React__default.useEffect(function () {
+  React.useEffect(function () {
     return function () {
       if (output) {
         output();
@@ -5561,10 +5852,10 @@ function makeStyles(stylesOrCreator) {
     var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     var theme = useTheme() || defaultTheme;
 
-    var stylesOptions = _extends({}, React__default.useContext(StylesContext), stylesOptions2);
+    var stylesOptions = _extends({}, React.useContext(StylesContext), stylesOptions2);
 
-    var instance = React__default.useRef();
-    var shouldUpdate = React__default.useRef();
+    var instance = React.useRef();
+    var shouldUpdate = React.useRef();
     useSynchronousEffect(function () {
       var current = {
         name: name,
@@ -5580,7 +5871,7 @@ function makeStyles(stylesOrCreator) {
         detach(current);
       };
     }, [theme, stylesCreator]);
-    React__default.useEffect(function () {
+    React.useEffect(function () {
       if (shouldUpdate.current) {
         update(instance.current, props);
       }
@@ -5591,7 +5882,7 @@ function makeStyles(stylesOrCreator) {
 
     if (process.env.NODE_ENV !== 'production') {
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      React__default.useDebugValue(classes);
+      React.useDebugValue(classes);
     }
 
     return classes;
@@ -5599,6 +5890,14 @@ function makeStyles(stylesOrCreator) {
 
   return useStyles;
 }
+
+var getFieldError = function (fieldName, formikProps) {
+    var fieldError = get(formikProps, "errors." + fieldName);
+    var isTouched = get(formikProps, "touched." + fieldName);
+    if (!isTouched && formikProps.submitCount < 1)
+        return '';
+    return fieldError;
+};
 
 var getTimeValue = function (time, format) {
     if (format === void 0) { format = 'HH:mm'; }
@@ -5641,30 +5940,30 @@ var MUIDropDownTimePicker = function (props) {
             formikProps.setFieldValue(fieldConfig.valueKey, (newValue.hours || '00') + ":" + (newValue.minutes || '00'));
     };
     var onClear = function () { onTimeChange ? onTimeChange(null) : formikProps.setFieldValue(fieldConfig.valueKey, null); };
-    return (React__default.createElement(Box, { width: '100%' },
-        header ? React__default.createElement(Typography, __assign({}, headerProps), header) : null,
-        React__default.createElement(Box, __assign({ width: '100%', display: 'flex', justifyContent: 'space-between', boxSizing: 'border-box', alignItems: 'flex-end' }, containerProps),
-            React__default.createElement(Box, { width: '50%', margin: '0px 5px' },
-                React__default.createElement(FormControl, { className: classes.formControl, placeholder: 'data' },
-                    React__default.createElement(InputLabel, { id: "hrs" }, hourLabel),
-                    React__default.createElement(Select, __assign({ fullWidth: true, value: baseValue.hours || '', name: 'hours', onChange: onChange, placeholder: 'Hours', labelId: 'hrs' }, selectProps), HOURS.map(function (hrs, index) {
+    return (React.createElement(Box, { width: '100%' },
+        header ? React.createElement(Typography, __assign({}, headerProps), header) : null,
+        React.createElement(Box, __assign({ width: '100%', display: 'flex', justifyContent: 'space-between', boxSizing: 'border-box', alignItems: 'flex-end' }, containerProps),
+            React.createElement(Box, { width: '50%', margin: '0px 5px' },
+                React.createElement(FormControl, { className: classes.formControl, placeholder: 'data' },
+                    React.createElement(InputLabel, { id: "hrs" }, hourLabel),
+                    React.createElement(Select, __assign({ fullWidth: true, value: baseValue.hours || '', name: 'hours', onChange: onChange, placeholder: 'Hours', labelId: 'hrs' }, selectProps), HOURS.map(function (hrs, index) {
                         var disable = isDisabled(startTime || null, endTime || null, __assign(__assign({}, baseValue), { hours: hrs }));
-                        return (React__default.createElement(MenuItem, { value: hrs, key: index, disabled: disable }, hrs));
+                        return (React.createElement(MenuItem, { value: hrs, key: index, disabled: disable }, hrs));
                     })))),
-            React__default.createElement(Box, { width: '50%', margin: '0px 5px' },
-                React__default.createElement(FormControl, { className: classes.formControl },
-                    React__default.createElement(InputLabel, { id: "min" }, minutesLabel),
-                    React__default.createElement(Select, __assign({ fullWidth: true, value: baseValue.minutes || '', name: 'minutes', placeholder: 'Minutes', labelId: 'min', onChange: onChange }, selectProps), MINUTES.map(function (min, index) {
+            React.createElement(Box, { width: '50%', margin: '0px 5px' },
+                React.createElement(FormControl, { className: classes.formControl },
+                    React.createElement(InputLabel, { id: "min" }, minutesLabel),
+                    React.createElement(Select, __assign({ fullWidth: true, value: baseValue.minutes || '', name: 'minutes', placeholder: 'Minutes', labelId: 'min', onChange: onChange }, selectProps), MINUTES.map(function (min, index) {
                         if (index % interval > 0) {
-                            return React__default.createElement("div", { key: index });
+                            return React.createElement("div", { key: index });
                         }
                         var disable = isDisabled(startTime || null, endTime || null, __assign(__assign({}, baseValue), { minutes: min }));
                         if (index % interval === 0)
-                            return (React__default.createElement(MenuItem, { value: min, key: index, disabled: disable }, min));
-                        return React__default.createElement("div", { key: index });
+                            return (React.createElement(MenuItem, { value: min, key: index, disabled: disable }, min));
+                        return React.createElement("div", { key: index });
                     })))),
-            clearable && React__default.createElement(Box, null, clearButton ? clearButton : React__default.createElement(IconButton, __assign({ size: 'small', onClick: onClear }, iconButtonProps), clearIcon || null))),
-        fieldError && React__default.createElement(Typography, { variant: 'overline', className: fieldError ? classes.errorField : '' }, fieldError)));
+            clearable && React.createElement(Box, null, clearButton ? clearButton : React.createElement(IconButton, __assign({ size: 'small', onClick: onClear }, iconButtonProps), clearIcon || null))),
+        fieldError && React.createElement(Typography, { variant: 'overline', className: fieldError ? classes.errorField : '' }, fieldError)));
 };
 var useStyles = makeStyles(function () {
     return (createStyles({
@@ -5741,9 +6040,9 @@ var MINUTES = ['00',
     '58',
     '59'];
 
-attachField('mui-date-picker', React__default.createElement(MUIDatePicker, null));
-attachField('mui-time-picker', React__default.createElement(MUITimePicker, null));
-attachField('mui-time-picker-select', React__default.createElement(MUIDropDownTimePicker, null));
+attachField('mui-date-picker', React.createElement(MUIDatePicker, null));
+attachField('mui-time-picker', React.createElement(MUITimePicker, null));
+attachField('mui-time-picker-select', React.createElement(MUIDropDownTimePicker, null));
 
 var index = './lib';
 
